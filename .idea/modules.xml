@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Haye-Mickael-projet-91.iml" filepath="$PROJECT_DIR$/.idea/Haye-Mickael-projet-91.iml" />
-      <module fileurl="file://$PROJECT_DIR$/microservice-back-patient/microservice-back-patient.iml" filepath="$PROJECT_DIR$/microservice-back-patient/microservice-back-patient.iml" />
     </modules>
   </component>
 </project>
