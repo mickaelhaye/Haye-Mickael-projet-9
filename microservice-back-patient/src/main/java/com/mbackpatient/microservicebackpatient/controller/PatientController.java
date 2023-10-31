@@ -30,12 +30,11 @@ public class PatientController {
     /**
      * Récupère la liste de tous les patients.
      *
-     * @param authHeader En-tête d'autorisation pour authentifier la requête.
      * @return La liste des patients.
      */
     @GetMapping(value = "/list")
-    public List<PatientModel> listPatient(@RequestHeader("Authorization") String authHeader) {
-        logger.info("Récupération de la liste des patients avec l'autorisation: {}", authHeader);
+    public List<PatientModel> listPatient() {
+
         List<PatientModel> patients = (List<PatientModel>) patientService.getPatients();
         return patients;
     }
@@ -44,13 +43,11 @@ public class PatientController {
      * Récupère le formulaire de mise à jour pour un patient spécifique.
      *
      * @param id         L'identifiant du patient à mettre à jour.
-     * @param authHeader En-tête d'autorisation pour authentifier la requête.
      * @return Les détails du patient à mettre à jour.
      * @throws PatientNotFoundException si le patient n'est pas trouvé.
      */
     @GetMapping(value = "/updateForm/{id}")
-    public Optional<PatientModel> updatePatientForm(@PathVariable int id, @RequestHeader("Authorization") String authHeader) {
-        logger.info("Récupération du formulaire de mise à jour pour le patient ID: {} avec l'autorisation: {}", id, authHeader);
+    public Optional<PatientModel> updatePatientForm(@PathVariable int id) {
         Optional<PatientModel> patient = patientService.getPatientById(id);
         if (!patient.isPresent()) {
             logger.error("Patient avec ID: {} non trouvé", id);
@@ -63,12 +60,10 @@ public class PatientController {
      * Met à jour les informations d'un patient.
      *
      * @param updatedPatient Les nouvelles informations du patient.
-     * @param authHeader     En-tête d'autorisation pour authentifier la requête.
      * @return Le patient mis à jour.
      */
     @PostMapping(value = "/update/{id}")
-    public PatientModel updatePatient(@RequestBody PatientModel updatedPatient, @RequestHeader("Authorization") String authHeader) {
-        logger.info("Mise à jour du patient ID: {} avec l'autorisation: {}", authHeader);
+    public PatientModel updatePatient(@RequestBody PatientModel updatedPatient) {
         return patientService.addPatient(updatedPatient);
     }
 
@@ -76,13 +71,11 @@ public class PatientController {
      * Ajoute un nouveau patient.
      *
      * @param newPatient  Le nouveau patient à ajouter.
-     * @param authHeader  En-tête d'autorisation pour authentifier la requête.
      * @return Le patient ajouté.
      */
     @PostMapping(value = "/add")
-    public PatientModel addPatient(@RequestBody PatientModel newPatient, @RequestHeader("Authorization") String authHeader) {
-        logger.info("Ajout d'un nouveau patient avec l'autorisation: {}", authHeader);
-        return patientService.addPatient(newPatient);
+    public PatientModel addPatient(@RequestBody PatientModel newPatient) {
+       return patientService.addPatient(newPatient);
     }
 
     /**
