@@ -6,6 +6,8 @@ package com.mfront.microservicefront.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Classe de configuration pour les beans utilisés dans le microservice front.
@@ -20,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @Configuration
 public class AppConfig {
+    private static final Logger logger = LoggerFactory.getLogger(AppConfig.class);
 
     /**
      * Crée et retourne un bean {@code RestTemplate}.
@@ -33,6 +36,7 @@ public class AppConfig {
      */
     @Bean
     public RestTemplate restTemplate() {
+        logger.info("Création du bean RestTemplate pour les appels HTTP.");
         return new RestTemplate();
     }
 }

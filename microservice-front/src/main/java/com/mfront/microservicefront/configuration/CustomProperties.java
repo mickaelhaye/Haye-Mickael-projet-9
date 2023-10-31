@@ -5,6 +5,8 @@ package com.mfront.microservicefront.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Classe de configuration pour les propriétés personnalisées du microservice front.
@@ -21,6 +23,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "com.mfront.microservicefront")
 public class CustomProperties {
+    private static final Logger logger = LoggerFactory.getLogger(CustomProperties.class);
+
     /**
      * Chemin du gateway.
      * <p>
@@ -45,6 +49,7 @@ public class CustomProperties {
      * @param gatewayPath le nouveau chemin du gateway à définir.
      */
     public void setGatewayPath(String gatewayPath) {
+        logger.info("Mise à jour du chemin du gateway : {}", gatewayPath);
         this.gatewayPath = gatewayPath;
     }
 }

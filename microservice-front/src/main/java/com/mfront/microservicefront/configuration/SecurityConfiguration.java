@@ -18,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Classe de configuration pour la sécurité web du microservice front.
@@ -35,6 +37,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
     /**
      * Configure et retourne un {@code SecurityFilterChain} pour la sécurité HTTP.
      *
@@ -44,6 +47,7 @@ public class SecurityConfiguration {
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        logger.info("Configuration de la sécurité HTTP.");
         http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
@@ -61,6 +65,7 @@ public class SecurityConfiguration {
      */
     @Bean
     public UserDetailsService users() {
+        logger.info("Configuration des utilisateurs en mémoire.");
         UserDetails user1 = User.builder()
                 .username("user1")
                 .password(passwordEncoder().encode("0241585915"))
@@ -79,6 +84,7 @@ public class SecurityConfiguration {
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        logger.info("Configuration du gestionnaire d'authentification.");
         return authenticationConfiguration.getAuthenticationManager();
     }
 
@@ -89,6 +95,7 @@ public class SecurityConfiguration {
      */
     @Bean
     PasswordEncoder passwordEncoder() {
+        logger.info("Configuration de l'encodeur de mot de passe BCrypt.");
         return new BCryptPasswordEncoder();
     }
 }

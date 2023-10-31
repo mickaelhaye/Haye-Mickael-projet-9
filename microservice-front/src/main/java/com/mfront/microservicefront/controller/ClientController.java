@@ -18,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Contrôleur gérant les interactions liées aux patients pour le front-end.
@@ -32,6 +34,7 @@ import java.util.List;
 @Controller
 @RequestMapping("patientFront")
 public class ClientController {
+    private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
     private final RestTemplate restTemplate;
     private final CustomProperties prop;
 
@@ -56,6 +59,7 @@ public class ClientController {
      */
     @GetMapping("/list")
     public String listPatient(Model model, @RequestHeader("Authorization") String authHeader) {
+        logger.info("Récupération de la liste des patients.");
         String url = prop.getGatewayPath() + "/patientBack/list";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
@@ -76,6 +80,7 @@ public class ClientController {
      */
     @GetMapping("/updateForm/{id}")
     public String updatePatientForm(@PathVariable int id, Model model, @RequestHeader("Authorization") String authHeader) {
+        logger.info("Récupération du formulaire de mise à jour pour le patient avec l'ID: {}", id);
         String url = prop.getGatewayPath() + "/patientBack/updateForm/" + id;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
@@ -96,6 +101,7 @@ public class ClientController {
      */
     @PostMapping("/update/{id}")
     public String updatePatient(@PathVariable Integer id, @Valid PatientModel patient, Model model, @RequestHeader("Authorization") String authHeader) {
+        logger.info("Mise à jour du patient avec l'ID: {}", id);
         String url = prop.getGatewayPath() + "/patientBack/update/" + id;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
@@ -112,6 +118,7 @@ public class ClientController {
      */
     @GetMapping("/add")
     public String addPatientForm(Model model) {
+        logger.info("Affichage du formulaire pour ajouter un nouveau patient.");
         model.addAttribute("patient", new PatientModel());
         return "patient/add";
     }
@@ -126,6 +133,7 @@ public class ClientController {
      */
     @PostMapping("/add")
     public String addPatient(@Valid PatientModel patient, Model model, @RequestHeader("Authorization") String authHeader) {
+        logger.info("Ajout d'un nouveau patient.");
         String url = prop.getGatewayPath() + "/patientBack/add";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
@@ -143,6 +151,7 @@ public class ClientController {
      */
     @GetMapping("/delete/{id}")
     public String deletePatient(@PathVariable int id, @RequestHeader("Authorization") String authHeader) {
+        logger.info("Suppression du patient avec l'ID: {}", id);
         String url = prop.getGatewayPath() + "/patientBack/delete/" + id;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
