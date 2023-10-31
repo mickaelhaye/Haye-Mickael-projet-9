@@ -1,3 +1,6 @@
+/**
+ * Package dédié aux contrôleurs du microservice front.
+ */
 package com.mfront.microservicefront.controller;
 
 import com.mfront.microservicefront.configuration.CustomProperties;
@@ -16,103 +19,135 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Contrôleur gérant les interactions liées aux patients pour le front-end.
+ * <p>
+ * Cette classe gère les routes relatives aux patients, notamment l'affichage, l'ajout,
+ * la mise à jour et la suppression des patients.
+ * </p>
+ *
+ * @author mickael hayé
+ * @version 1.0
+ */
 @Controller
 @RequestMapping("patientFront")
 public class ClientController {
     private final RestTemplate restTemplate;
     private final CustomProperties prop;
 
+    /**
+     * Constructeur permettant l'injection des dépendances.
+     *
+     * @param restTemplate Le bean {@code RestTemplate} pour les appels HTTP.
+     * @param prop         Les propriétés personnalisées du microservice.
+     */
     @Autowired
     public ClientController(RestTemplate restTemplate, CustomProperties prop) {
         this.restTemplate = restTemplate;
         this.prop = prop;
     }
 
+    /**
+     * Affiche la liste des patients.
+     *
+     * @param model      Modèle Spring pour passer des données à la vue.
+     * @param authHeader En-tête d'autorisation pour la requête.
+     * @return Le nom de la vue pour afficher la liste des patients.
+     */
     @GetMapping("/list")
     public String listPatient(Model model, @RequestHeader("Authorization") String authHeader) {
         String url = prop.getGatewayPath() + "/patientBack/list";
-
-        // Configuration des en-têtes
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
-
-        // Effectuer la requête avec les en-têtes
         ResponseEntity<PatientModel[]> response = restTemplate.exchange(url, HttpMethod.GET, entity, PatientModel[].class);
-        PatientModel[] patientsArray = response.getBody();
-
-        List<PatientModel> patients = Arrays.asList(patientsArray);
+        List<PatientModel> patients = Arrays.asList(response.getBody());
         model.addAttribute("patients", patients);
-
         return "patient/list";
     }
 
+    /**
+     * Affiche le formulaire de mise à jour pour un patient donné.
+     *
+     * @param id         ID du patient à mettre à jour.
+     * @param model      Modèle Spring pour passer des données à la vue.
+     * @param authHeader En-tête d'autorisation pour la requête.
+     * @return Le nom de la vue pour la mise à jour du patient.
+     */
     @GetMapping("/updateForm/{id}")
     public String updatePatientForm(@PathVariable int id, Model model, @RequestHeader("Authorization") String authHeader) {
         String url = prop.getGatewayPath() + "/patientBack/updateForm/" + id;
-
-        // Configuration des en-têtes
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
-
-        // Effectuer la requête avec les en-têtes
         ResponseEntity<PatientModel> response = restTemplate.exchange(url, HttpMethod.GET, entity, PatientModel.class);
-        PatientModel patient = response.getBody();
-
-        model.addAttribute("patient", patient);
-
+        model.addAttribute("patient", response.getBody());
         return "patient/update";
     }
 
+    /**
+     * Met à jour les informations d'un patient.
+     *
+     * @param id         ID du patient à mettre à jour.
+     * @param patient    Les nouvelles informations du patient.
+     * @param model      Modèle Spring pour passer des données à la vue.
+     * @param authHeader En-tête d'autorisation pour la requête.
+     * @return Redirige vers la liste des patients après la mise à jour.
+     */
     @PostMapping("/update/{id}")
     public String updatePatient(@PathVariable Integer id, @Valid PatientModel patient, Model model, @RequestHeader("Authorization") String authHeader) {
         String url = prop.getGatewayPath() + "/patientBack/update/" + id;
-
-        // Configuration des en-têtes
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<PatientModel> entity = new HttpEntity<>(patient, headers);
-
-        // Effectuer la requête POST avec le corps et les en-têtes
         restTemplate.exchange(url, HttpMethod.POST, entity, Void.class);
-
         return "redirect:" + prop.getGatewayPath() + "/patientFront/list";
     }
 
+    /**
+     * Affiche le formulaire d'ajout d'un nouveau patient.
+     *
+     * @param model Modèle Spring pour passer des données à la vue.
+     * @return Le nom de la vue pour ajouter un patient.
+     */
     @GetMapping("/add")
     public String addPatientForm(Model model) {
         model.addAttribute("patient", new PatientModel());
         return "patient/add";
     }
 
+    /**
+     * Ajoute un nouveau patient.
+     *
+     * @param patient    Les informations du nouveau patient.
+     * @param model      Modèle Spring pour passer des données à la vue.
+     * @param authHeader En-tête d'autorisation pour la requête.
+     * @return Redirige vers la liste des patients après l'ajout.
+     */
     @PostMapping("/add")
     public String addPatient(@Valid PatientModel patient, Model model, @RequestHeader("Authorization") String authHeader) {
         String url = prop.getGatewayPath() + "/patientBack/add";
-
-        // Configuration des en-têtes
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<PatientModel> entity = new HttpEntity<>(patient, headers);
-
-        // Effectuer la requête POST avec le corps et les en-têtes
         restTemplate.postForEntity(url, entity, Void.class);
-
         return "redirect:" + prop.getGatewayPath() + "/patientFront/list";
     }
 
+    /**
+     * Supprime un patient.
+     *
+     * @param id         ID du patient à supprimer.
+     * @param authHeader En-tête d'autorisation pour la requête.
+     * @return Redirige vers la liste des patients après la suppression.
+     */
     @GetMapping("/delete/{id}")
     public String deletePatient(@PathVariable int id, @RequestHeader("Authorization") String authHeader) {
         String url = prop.getGatewayPath() + "/patientBack/delete/" + id;
-
-        // Configuration des en-têtes
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
-
-        // Effectuer la requête DELETE avec les en-têtes, même si c'est dans le contexte d'un @GetMapping
         restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
-
         return "redirect:" + prop.getGatewayPath() + "/patientFront/list";
     }
 }

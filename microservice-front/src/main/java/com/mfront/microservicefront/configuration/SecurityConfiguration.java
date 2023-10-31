@@ -1,3 +1,6 @@
+/**
+ * Package dédié à la configuration du microservice front.
+ */
 package com.mfront.microservicefront.configuration;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +20,12 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
- * this class is to manage the security with spring security.
+ * Classe de configuration pour la sécurité web du microservice front.
+ * <p>
+ * Cette classe configure la sécurité web en utilisant Spring Security.
+ * Elle est annotée avec {@code @EnableWebSecurity} pour activer la sécurité web et
+ * {@code @Configuration} pour indiquer à Spring que c'est une classe de configuration.
+ * </p>
  *
  * @author mickael hayé
  * @version 1.0
@@ -27,15 +35,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-
     /**
-     * this method consists of managing the filter chain.
+     * Configure et retourne un {@code SecurityFilterChain} pour la sécurité HTTP.
      *
-     * @param http security
-     * @return http build
-     * @throws Exception not found
+     * @param http l'objet {@code HttpSecurity} pour configurer la sécurité web.
+     * @return le {@code SecurityFilterChain} configuré.
+     * @throws Exception en cas d'erreurs pendant la configuration.
      */
-    //@formatter:off
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
@@ -43,10 +49,16 @@ public class SecurityConfiguration {
                 .httpBasic(Customizer.withDefaults())
                 .csrf().disable();
         return http.build();
-        //@formatter:on
-
     }
 
+    /**
+     * Configure et retourne un service de détails d'utilisateur en mémoire.
+     * <p>
+     * Cette méthode configure un utilisateur de test en mémoire pour l'authentification.
+     * </p>
+     *
+     * @return le {@code UserDetailsService} configuré.
+     */
     @Bean
     public UserDetailsService users() {
         UserDetails user1 = User.builder()
@@ -57,14 +69,26 @@ public class SecurityConfiguration {
         return new InMemoryUserDetailsManager(user1);
     }
 
+    /**
+     * Configure et retourne un gestionnaire d'authentification.
+     *
+     * @param authenticationConfiguration la configuration d'authentification.
+     * @return le {@code AuthenticationManager} configuré.
+     * @throws Exception en cas d'erreurs pendant la configuration.
+     */
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    /**
+     * Retourne un encodeur de mot de passe BCrypt.
+     *
+     * @return le {@code PasswordEncoder} configuré.
+     */
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
