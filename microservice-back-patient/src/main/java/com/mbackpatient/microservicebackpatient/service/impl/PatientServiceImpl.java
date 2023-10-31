@@ -1,3 +1,7 @@
+/**
+ * Package pour les classes de service implémentant les fonctionnalités spécifiques
+ * au microservice back-patient.
+ */
 package com.mbackpatient.microservicebackpatient.service.impl;
 
 import com.mbackpatient.microservicebackpatient.model.entity.PatientModel;
@@ -9,12 +13,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Implémentation du service pour les opérations liées à {@link PatientModel}.
+ * Cette classe met en œuvre les méthodes définies dans l'interface {@link PatientService}
+ * pour interagir avec le dépôt de données de patients.
+ *
+ * @author mickael hayé
+ * @version 1.0
+ */
 @Service
 public class PatientServiceImpl implements PatientService {
 
     @Autowired
     private PatientRepository patientRepository;
 
+    /**
+     * Méthode d'initialisation pour charger la base de données avec des données de test.
+     * TODO : Cette méthode est temporaire et doit être supprimée dans la version finale.
+     */
     //todo à enlever
     @PostConstruct
     public void chargementBdd(){
@@ -24,21 +40,33 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.save(new PatientModel("TestEarlyOnset","Test","2002-06-28","F","4 Valley Dr", "400-555-6666"));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Iterable<PatientModel> getPatients(){
-      return patientRepository.findAll();
+    public Iterable<PatientModel> getPatients() {
+        return patientRepository.findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<PatientModel> getPatientById(Integer id) {
         return patientRepository.findById(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PatientModel addPatient(PatientModel updatedPatient) {
         return patientRepository.save(updatedPatient);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deletePatient(int id) {
         patientRepository.deleteById(id);

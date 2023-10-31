@@ -17,8 +17,9 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
- * this class is to manage the security with spring security.
- *
+ * Classe de configuration pour les paramètres de sécurité de l'application.
+ * Cette configuration définit divers beans liés à la sécurité tels que UserDetailsService,
+ * AuthenticationManager, et PasswordEncoder.
  * @author mickael hayé
  * @version 1.0
  */
@@ -29,11 +30,11 @@ public class SecurityConfiguration {
 
 
     /**
-     * this method consists of managing the filter chain.
+     * Configure les paramètres HttpSecurity pour l'application.
      *
-     * @param http security
-     * @return http build
-     * @throws Exception not found
+     * @param http L'instance HttpSecurity à configurer.
+     * @return SecurityFilterChain configuré.
+     * @throws Exception si une erreur se produit lors de la configuration.
      */
     //@formatter:off
     @Bean
@@ -44,9 +45,13 @@ public class SecurityConfiguration {
                 .csrf().disable();
         return http.build();
         //@formatter:on
-
     }
 
+    /**
+     * Fournit un UserDetailsService d'exemple avec un utilisateur prédéfini en mémoire.
+     *
+     * @return UserDetailsService avec un utilisateur prédéfini.
+     */
     @Bean
     public UserDetailsService users() {
         UserDetails user1 = User.builder()
@@ -57,14 +62,26 @@ public class SecurityConfiguration {
         return new InMemoryUserDetailsManager(user1);
     }
 
+    /**
+     * Renvoie le bean AuthenticationManager de la configuration d'authentification fournie.
+     *
+     * @param authenticationConfiguration L'instance AuthenticationConfiguration.
+     * @return bean AuthenticationManager.
+     * @throws Exception si une erreur se produit lors de la récupération.
+     */
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    /**
+     * Fournit un bean PasswordEncoder pour l'application.
+     *
+     * @return bean PasswordEncoder.
+     */
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
