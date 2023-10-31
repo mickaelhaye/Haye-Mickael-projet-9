@@ -1,6 +1,9 @@
 package com.mbackpatient.microservicebackpatient.configuration;
 
+import com.mbackpatient.microservicebackpatient.controller.PatientController;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +31,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
 
     /**
      * Configure les paramètres HttpSecurity pour l'application.
@@ -39,10 +43,12 @@ public class SecurityConfiguration {
     //@formatter:off
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        logger.info("Configuration de HttpSecurity.");
         http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .csrf().disable();
+        logger.info("HttpSecurity configuré avec succès.");
         return http.build();
         //@formatter:on
     }
@@ -54,11 +60,13 @@ public class SecurityConfiguration {
      */
     @Bean
     public UserDetailsService users() {
+        logger.info("Création du UserDetailsService avec un utilisateur prédéfini.");
         UserDetails user1 = User.builder()
                 .username("user1")
                 .password(passwordEncoder().encode("0241585915"))
                 .roles("USER")
                 .build();
+        logger.info("Utilisateur 'user1' créé et ajouté à la mémoire.");
         return new InMemoryUserDetailsManager(user1);
     }
 
@@ -72,6 +80,7 @@ public class SecurityConfiguration {
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        logger.info("Récupération du bean AuthenticationManager.");
         return authenticationConfiguration.getAuthenticationManager();
     }
 
@@ -82,6 +91,7 @@ public class SecurityConfiguration {
      */
     @Bean
     PasswordEncoder passwordEncoder() {
+        logger.info("Configuration du BCryptPasswordEncoder.");
         return new BCryptPasswordEncoder();
     }
 }

@@ -3,10 +3,13 @@ package com.mbackpatient.microservicebackpatient.controller;
 import com.mbackpatient.microservicebackpatient.exceptions.PatientNotFoundException;
 import com.mbackpatient.microservicebackpatient.model.entity.PatientModel;
 import com.mbackpatient.microservicebackpatient.service.PatientService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
+
 
 /**
  * Point d'entrée REST pour la gestion des patients.
@@ -17,6 +20,7 @@ import java.util.Optional;
 @RequestMapping("patientBack")
 public class PatientController {
 
+    private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
     /**
      * Service pour les opérations liées au patient.
      */
@@ -31,6 +35,7 @@ public class PatientController {
      */
     @GetMapping(value = "/list")
     public List<PatientModel> listPatient(@RequestHeader("Authorization") String authHeader) {
+        logger.info("Récupération de la liste des patients avec l'autorisation: {}", authHeader);
         List<PatientModel> patients = (List<PatientModel>) patientService.getPatients();
         return patients;
     }
@@ -45,9 +50,12 @@ public class PatientController {
      */
     @GetMapping(value = "/updateForm/{id}")
     public Optional<PatientModel> updatePatientForm(@PathVariable int id, @RequestHeader("Authorization") String authHeader) {
+        logger.info("Récupération du formulaire de mise à jour pour le patient ID: {} avec l'autorisation: {}", id, authHeader);
         Optional<PatientModel> patient = patientService.getPatientById(id);
-        if (!patient.isPresent())
+        if (!patient.isPresent()) {
+            logger.error("Patient avec ID: {} non trouvé", id);
             throw new PatientNotFoundException("Le patient correspondant à l'id " + id + " n'existe pas");
+        }
         return patient;
     }
 
@@ -60,6 +68,7 @@ public class PatientController {
      */
     @PostMapping(value = "/update/{id}")
     public PatientModel updatePatient(@RequestBody PatientModel updatedPatient, @RequestHeader("Authorization") String authHeader) {
+        logger.info("Mise à jour du patient ID: {} avec l'autorisation: {}", authHeader);
         return patientService.addPatient(updatedPatient);
     }
 
@@ -72,6 +81,7 @@ public class PatientController {
      */
     @PostMapping(value = "/add")
     public PatientModel addPatient(@RequestBody PatientModel newPatient, @RequestHeader("Authorization") String authHeader) {
+        logger.info("Ajout d'un nouveau patient avec l'autorisation: {}", authHeader);
         return patientService.addPatient(newPatient);
     }
 
@@ -83,6 +93,7 @@ public class PatientController {
      */
     @DeleteMapping(value = "/delete/{id}")
     public void deletePatient(@PathVariable int id, @RequestHeader("Authorization") String authHeader) {
+        logger.info("Suppression du patient ID: {} avec l'autorisation: {}", id, authHeader);
         patientService.deletePatient(id);
     }
 }

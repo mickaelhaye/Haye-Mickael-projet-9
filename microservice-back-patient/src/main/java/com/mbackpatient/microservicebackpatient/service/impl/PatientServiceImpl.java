@@ -8,6 +8,8 @@ import com.mbackpatient.microservicebackpatient.model.entity.PatientModel;
 import com.mbackpatient.microservicebackpatient.repository.PatientRepository;
 import com.mbackpatient.microservicebackpatient.service.PatientService;
 import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,8 @@ import java.util.Optional;
 @Service
 public class PatientServiceImpl implements PatientService {
 
+    private static final Logger logger = LoggerFactory.getLogger(PatientServiceImpl.class);
+
     @Autowired
     private PatientRepository patientRepository;
 
@@ -34,6 +38,7 @@ public class PatientServiceImpl implements PatientService {
     //todo à enlever
     @PostConstruct
     public void chargementBdd(){
+        logger.info("Chargement initial des données de test dans la base de données.");
         patientRepository.save(new PatientModel("TestNone","Test","1966-12-31","F","1 Brookside St", "100-222-3333"));
         patientRepository.save(new PatientModel("TestBorderline","Test","1945-06-24","M","2 High St", "200-333-4444"));
         patientRepository.save(new PatientModel("TestInDanger","Test","2004-06-18","M","3 Club Road", "300-444-5555"));
@@ -45,6 +50,7 @@ public class PatientServiceImpl implements PatientService {
      */
     @Override
     public Iterable<PatientModel> getPatients() {
+        logger.info("Récupération de la liste complète des patients.");
         return patientRepository.findAll();
     }
 
@@ -53,6 +59,7 @@ public class PatientServiceImpl implements PatientService {
      */
     @Override
     public Optional<PatientModel> getPatientById(Integer id) {
+        logger.info("Récupération du patient avec l'ID : {}", id);
         return patientRepository.findById(id);
     }
 
@@ -61,6 +68,7 @@ public class PatientServiceImpl implements PatientService {
      */
     @Override
     public PatientModel addPatient(PatientModel updatedPatient) {
+        logger.info("Ajout d'un nouveau patient : {}", updatedPatient.toString());
         return patientRepository.save(updatedPatient);
     }
 
@@ -69,6 +77,7 @@ public class PatientServiceImpl implements PatientService {
      */
     @Override
     public void deletePatient(int id) {
+        logger.info("Suppression du patient avec l'ID : {}", id);
         patientRepository.deleteById(id);
     }
 }
