@@ -1,4 +1,4 @@
-package com.mbackpatient.microservicebackpatient.entity;
+package com.mbackpatient.microservicebackpatient.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
