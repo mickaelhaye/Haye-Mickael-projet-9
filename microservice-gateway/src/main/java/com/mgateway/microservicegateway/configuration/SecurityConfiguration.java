@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Configuration de sécurité pour le microservice gateway.
@@ -28,7 +30,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfiguration {
-
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
     /**
      * Configure les règles d'accès pour les différentes URL de l'application.
      *
@@ -37,6 +39,7 @@ public class SecurityConfiguration {
      */
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+        logger.info("Configuration des règles de sécurité.");
         http.authorizeExchange()
                 .pathMatchers("/patientFront/**").authenticated()
                 .pathMatchers("/patientBack/**").authenticated()
@@ -55,6 +58,7 @@ public class SecurityConfiguration {
      */
     @Bean
     public MapReactiveUserDetailsService userDetailsService() {
+        logger.info("Configuration des détails de l'utilisateur.");
         UserDetails user = User.builder()
                 .username("user1")
                 .password(passwordEncoder().encode("0241585915"))
@@ -70,6 +74,7 @@ public class SecurityConfiguration {
      */
     @Bean
     PasswordEncoder passwordEncoder(){
+        logger.info("Configuration de l'encodeur de mot de passe.");
         return new BCryptPasswordEncoder();
     }
 }
