@@ -5,6 +5,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/microservice-back-patient/pom.xml" />
+        <option value="$PROJECT_DIR$/microservice-front/pom.xml" />
       </list>
     </option>
   </component>
