@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>ListeNotes</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" rel="stylesheet">
+    <<script>
+    function confirmDelete(element) {
+        var noteId = element.getAttribute('data-note-id');
+        if(confirm("Êtes-vous sûr de vouloir supprimer cette note ?")) {
+            window.location.href = '/noteFront/delete/' + noteId;
+        }
+    }
+</script>
+</head>
+
+<body>
+<div class="container">
+    <h1 class="text-center">Liste des notes</h1>
+    <div class="text-center my-2" style="font-style: italic;">
+        <span>Nom du patient : </span>
+        <span th:text="${nomPatient}" style="font-size: larger;"></span>
+    </div>
+    <div class="mb-3 text-center">
+        <a class="btn btn-primary" href="/noteFront/add">Ajouter une note</a>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="my-3" th:each="note : ${notes}">
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="mb-0 d-inline-block" style="text-decoration: underline;"
+                       th:text="${#strings.length(note.note) > 50 ? #strings.substring(note.note, 0, 50) + '...' : note.note}">
+                    </p>
+                    <div class="d-flex">
+                        <div class="pr-2">
+                            <a class="btn btn-info btn-sm" style="margin-right: 10px;"
+                               th:href="@{|/noteFront/updateForm/${note.id}|}">VisuNote</a>
+                        </div>
+                        <div>
+                            <a class="btn btn-danger btn-sm" href="#" th:attr="data-note-id=${note.id}" onclick="confirmDelete(this)">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="text-center">
+        <a class="font-weight-bold" th:href="@{|/patientFront/list|}">Retour liste patients</a>
+    </div>
+</div>
+</body>
+</html>
