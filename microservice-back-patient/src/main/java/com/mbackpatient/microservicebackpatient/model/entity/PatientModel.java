@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * Classe représentant un patient dans le système de gestion de patients.
@@ -43,7 +46,8 @@ public class PatientModel {
      * Date de naissance du patient, stockée sous forme de chaîne.
      */
     @Field("date_de_naissance")
-    private String dateDeNaissance;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dateDeNaissance;
 
     /**
      * Genre du patient.
@@ -73,7 +77,7 @@ public class PatientModel {
      * @param adresse         Adresse du patient.
      * @param telephone       Numéro de téléphone du patient.
      */
-    public PatientModel(String nom, String prenom, String dateDeNaissance, String genre, String adresse, String telephone) {
+    public PatientModel(String nom, String prenom, Date dateDeNaissance, String genre, String adresse, String telephone) {
         this.nom = nom;
         this.prenom = prenom;
         this.dateDeNaissance = dateDeNaissance;
