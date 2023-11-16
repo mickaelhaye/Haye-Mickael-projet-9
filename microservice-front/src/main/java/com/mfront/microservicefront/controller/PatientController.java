@@ -5,6 +5,7 @@ package com.mfront.microservicefront.controller;
 
 import com.mfront.microservicefront.configuration.CustomProperties;
 import com.mfront.microservicefront.model.PatientModel;
+import com.mfront.microservicefront.service.DateService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -16,8 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,9 @@ public class PatientController {
     private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
     private final RestTemplate restTemplate;
     private final CustomProperties prop;
+
+    @Autowired
+    private DateService  dateService;
 
     /**
      * Constructeur permettant l'injection des dépendances.
@@ -87,6 +92,7 @@ public class PatientController {
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
         ResponseEntity<PatientModel> response = restTemplate.exchange(url, HttpMethod.GET, entity, PatientModel.class);
         model.addAttribute("patient", response.getBody());
+        model.addAttribute("dateDuJour", dateService.dateDuJour());
         return "patient/update";
     }
 
@@ -118,8 +124,16 @@ public class PatientController {
      */
     @GetMapping("/add")
     public String addPatientForm(Model model) {
+        // récupération date actuelle
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(new Date());
+        String formatDate = "yyyy-MM-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(formatDate);
+        String dateActuelle = sdf.format(calendar.getTime());
+
         logger.info("Affichage du formulaire pour ajouter un nouveau patient.");
         model.addAttribute("patient", new PatientModel());
+        model.addAttribute("dateDuJour", dateService.dateDuJour());
         return "patient/add";
     }
 
