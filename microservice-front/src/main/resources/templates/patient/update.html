@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-md-4 mx-auto mt-2 text-center">
             <form action="#" class="form-horizontal" method="post"
-                  style="width: 100%" th:action="@{/patientFront/update/{id}(id=${patient.patientId})}" th:object="${patient}">
+                  style="width: 100%" th:action="@{/patientFront/update/{id}(id=${patient.id})}" th:object="${patient}">
                 <div class="form-group mb-4">
                     <label class="col-sm-5 control-label text-start" for="nom">Nom :</label>
                     <input class="col-4" id="nom" placeholder="nom" required=true th:field="*{nom}" type="text">
@@ -46,9 +46,12 @@
                 </div>
                 <div class="form-group mb-4">
                     <div class="col-sm-12">
-                        <input th:field="*{patientId}" type="hidden">
+                        <input th:field="*{id}" type="hidden">
                         <input class="btn btn-primary btn-sm" type="submit" value="Update Patient">
+                        <a class="btn btn-info btn-sm" style="margin-right: 10px;"
+                           th:href="@{|/noteFront/list/${patient.id}/${patient.nom}|}">Note Patient</a>
                     </div>
+
                 </div>
             </form>
             <p>
