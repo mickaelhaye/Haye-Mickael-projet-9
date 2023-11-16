@@ -30,7 +30,5 @@ public class NoteModel {
 
     private String idPatient;
 
-    private String nomPatient;
-
     private String note;
 }

@@ -85,6 +85,7 @@ public class NoteController {
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
         ResponseEntity<NoteModel> response = restTemplate.exchange(url, HttpMethod.GET, entity, NoteModel.class);
         model.addAttribute("note", response.getBody());
+        model.addAttribute("nomPatient", nomPatient);
         return "note/update";
     }
 
@@ -101,7 +102,6 @@ public class NoteController {
     public String updateNote(@PathVariable String id, @Valid NoteModel note, Model model, @RequestHeader("Authorization") String authHeader) {
         logger.info("Mise à jour de la note ID: {}", id);
         note.setIdPatient(idPatient);
-        note.setNomPatient(nomPatient);
         String url = prop.getGatewayPath() + "/noteBack/update/" + id;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
@@ -121,8 +121,8 @@ public class NoteController {
         logger.info("Formulaire d'ajout de note demandé");
         NoteModel note = new NoteModel();
         note.setIdPatient(idPatient);
-        note.setNomPatient(nomPatient);
         model.addAttribute("note", note);
+        model.addAttribute("nomPatient", nomPatient);
         return "note/add";
     }
 
@@ -140,7 +140,6 @@ public class NoteController {
         //todo à valider
         note.setId(null);
         note.setIdPatient(idPatient);
-        note.setNomPatient(nomPatient);
         String url = prop.getGatewayPath() + "/noteBack/add";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
