@@ -4,6 +4,7 @@
 package com.mbackpatient.microservicebackpatient.repository;
 
 import com.mbackpatient.microservicebackpatient.model.entity.PatientModel;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -17,5 +18,5 @@ import org.springframework.data.repository.CrudRepository;
  * @author mickael hayé
  * @version 1.0
  */
-public interface PatientRepository extends CrudRepository<PatientModel, Integer> {
+public interface PatientRepository extends MongoRepository<PatientModel, String> {
 }
