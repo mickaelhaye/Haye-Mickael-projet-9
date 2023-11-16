@@ -26,7 +26,7 @@ public class PatientModel {
     /**
      * L'identifiant unique du patient.
      */
-    private int patientId;
+    private String id;
 
     /**
      * Le nom du patient.
