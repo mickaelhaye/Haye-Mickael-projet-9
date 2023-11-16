@@ -33,8 +33,8 @@ import org.slf4j.LoggerFactory;
  */
 @Controller
 @RequestMapping("patientFront")
-public class ClientController {
-    private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
+public class PatientController {
+    private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
     private final RestTemplate restTemplate;
     private final CustomProperties prop;
 
@@ -45,7 +45,7 @@ public class ClientController {
      * @param prop         Les propriétés personnalisées du microservice.
      */
     @Autowired
-    public ClientController(RestTemplate restTemplate, CustomProperties prop) {
+    public PatientController(RestTemplate restTemplate, CustomProperties prop) {
         this.restTemplate = restTemplate;
         this.prop = prop;
     }
@@ -79,7 +79,7 @@ public class ClientController {
      * @return Le nom de la vue pour la mise à jour du patient.
      */
     @GetMapping("/updateForm/{id}")
-    public String updatePatientForm(@PathVariable int id, Model model, @RequestHeader("Authorization") String authHeader) {
+    public String updatePatientForm(@PathVariable String id, Model model, @RequestHeader("Authorization") String authHeader) {
         logger.info("Récupération du formulaire de mise à jour pour le patient avec l'ID: {}", id);
         String url = prop.getGatewayPath() + "/patientBack/updateForm/" + id;
         HttpHeaders headers = new HttpHeaders();
@@ -100,7 +100,7 @@ public class ClientController {
      * @return Redirige vers la liste des patients après la mise à jour.
      */
     @PostMapping("/update/{id}")
-    public String updatePatient(@PathVariable Integer id, @Valid PatientModel patient, Model model, @RequestHeader("Authorization") String authHeader) {
+    public String updatePatient(@PathVariable String id, @Valid PatientModel patient, Model model, @RequestHeader("Authorization") String authHeader) {
         logger.info("Mise à jour du patient avec l'ID: {}", id);
         String url = prop.getGatewayPath() + "/patientBack/update/" + id;
         HttpHeaders headers = new HttpHeaders();
@@ -134,6 +134,8 @@ public class ClientController {
     @PostMapping("/add")
     public String addPatient(@Valid PatientModel patient, Model model, @RequestHeader("Authorization") String authHeader) {
         logger.info("Ajout d'un nouveau patient.");
+        //todo à valider
+        patient.setId(null);
         String url = prop.getGatewayPath() + "/patientBack/add";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
@@ -150,13 +152,21 @@ public class ClientController {
      * @return Redirige vers la liste des patients après la suppression.
      */
     @GetMapping("/delete/{id}")
-    public String deletePatient(@PathVariable int id, @RequestHeader("Authorization") String authHeader) {
+    public String deletePatient(@PathVariable String id, @RequestHeader("Authorization") String authHeader) {
         logger.info("Suppression du patient avec l'ID: {}", id);
         String url = prop.getGatewayPath() + "/patientBack/delete/" + id;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
         restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
+
+        //Suppression des notes concernant le patient
+        url = prop.getGatewayPath() + "/noteBack/deleteAll/" + id;
+        headers = new HttpHeaders();
+        headers.set("Authorization", authHeader);
+        entity = new HttpEntity<>("body", headers);
+        restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
+
         return "redirect:" + prop.getGatewayPath() + "/patientFront/list";
     }
 }
