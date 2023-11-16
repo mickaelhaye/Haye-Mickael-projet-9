@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/microservice-back-patient/pom.xml" />
         <option value="$PROJECT_DIR$/microservice-front/pom.xml" />
         <option value="$PROJECT_DIR$/microservice-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/microservice-back-note/pom.xml" />
       </list>
     </option>
   </component>
