@@ -47,7 +47,7 @@ public class PatientController {
      * @throws PatientNotFoundException si le patient n'est pas trouvé.
      */
     @GetMapping(value = "/updateForm/{id}")
-    public Optional<PatientModel> updatePatientForm(@PathVariable int id) {
+    public Optional<PatientModel> updatePatientForm(@PathVariable String id) {
         Optional<PatientModel> patient = patientService.getPatientById(id);
         if (!patient.isPresent()) {
             logger.error("Patient avec ID: {} non trouvé", id);
@@ -64,7 +64,7 @@ public class PatientController {
      */
     @PostMapping(value = "/update/{id}")
     public PatientModel updatePatient(@RequestBody PatientModel updatedPatient) {
-        return patientService.addPatient(updatedPatient);
+        return patientService.updatePatient(updatedPatient);
     }
 
     /**
@@ -75,18 +75,17 @@ public class PatientController {
      */
     @PostMapping(value = "/add")
     public PatientModel addPatient(@RequestBody PatientModel newPatient) {
-       return patientService.addPatient(newPatient);
+        return patientService.insertPatient(newPatient);
     }
 
     /**
      * Supprime un patient spécifique.
      *
      * @param id         L'identifiant du patient à supprimer.
-     * @param authHeader En-tête d'autorisation pour authentifier la requête.
      */
     @DeleteMapping(value = "/delete/{id}")
-    public void deletePatient(@PathVariable int id, @RequestHeader("Authorization") String authHeader) {
-        logger.info("Suppression du patient ID: {} avec l'autorisation: {}", id, authHeader);
+    public void deletePatient(@PathVariable String id) {
+        logger.info("Suppression du patient ID: {}", id);
         patientService.deletePatient(id);
     }
 }
