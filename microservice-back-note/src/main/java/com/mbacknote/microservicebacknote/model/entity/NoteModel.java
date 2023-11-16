@@ -33,29 +33,9 @@ public class NoteModel {
     private String idPatient;
 
     /**
-     * Nom du patient associé à la note.
-     * Stocké dans le champ 'patient'.
-     */
-    @Field("patient")
-    private String nomPatient;
-
-    /**
      * Contenu de la note.
      * Stocké dans le champ 'note'.
      */
     @Field("note")
     private String note;
-
-    /**
-     * Constructeur personnalisé pour créer une note avec des détails spécifiques.
-     *
-     * @param idPatient Identifiant du patient associé à la note.
-     * @param nomPatient Nom du patient.
-     * @param note Contenu de la note.
-     */
-    public NoteModel(String idPatient, String nomPatient, String note) {
-        this.idPatient = idPatient;
-        this.nomPatient = nomPatient;
-        this.note = note;
-    }
 }
