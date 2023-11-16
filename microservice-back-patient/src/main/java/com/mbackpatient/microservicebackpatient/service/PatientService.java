@@ -30,20 +30,28 @@ public interface PatientService {
      * @param id l'identifiant du patient à récupérer
      * @return un Optional contenant le patient s'il est trouvé, sinon Optional vide
      */
-    Optional<PatientModel> getPatientById(Integer id);
+    Optional<PatientModel> getPatientById(String id);
 
     /**
-     * Ajoute ou met à jour un patient.
+     * Ajoute un patient.
      *
-     * @param updatedPatient le modèle du patient à ajouter ou mettre à jour
-     * @return le patient ajouté ou mis à jour
+     * @param insertPatient le modèle du patient à ajouter
+     * @return le patient ajouté
      */
-    PatientModel addPatient(PatientModel updatedPatient);
+    PatientModel insertPatient(PatientModel insertPatient);
+
+    /**
+     * Met à jour un patient.
+     *
+     * @param updatedPatient le modèle du patient à mettre à jour
+     * @return le patient mis à jour
+     */
+    PatientModel updatePatient(PatientModel updatedPatient);
 
     /**
      * Supprime un patient par son identifiant.
      *
      * @param id l'identifiant du patient à supprimer
      */
-    void deletePatient(int id);
+    void deletePatient(String id);
 }

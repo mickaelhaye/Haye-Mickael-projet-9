@@ -32,20 +32,6 @@ public class PatientServiceImpl implements PatientService {
     private PatientRepository patientRepository;
 
     /**
-     * Méthode d'initialisation pour charger la base de données avec des données de test.
-     * TODO : Cette méthode est temporaire et doit être supprimée dans la version finale.
-     */
-    //todo à enlever
-    @PostConstruct
-    public void chargementBdd(){
-        logger.info("Chargement initial des données de test dans la base de données.");
-        patientRepository.save(new PatientModel("TestNone","Test","1966-12-31","F","1 Brookside St", "100-222-3333"));
-        patientRepository.save(new PatientModel("TestBorderline","Test","1945-06-24","M","2 High St", "200-333-4444"));
-        patientRepository.save(new PatientModel("TestInDanger","Test","2004-06-18","M","3 Club Road", "300-444-5555"));
-        patientRepository.save(new PatientModel("TestEarlyOnset","Test","2002-06-28","F","4 Valley Dr", "400-555-6666"));
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -58,7 +44,7 @@ public class PatientServiceImpl implements PatientService {
      * {@inheritDoc}
      */
     @Override
-    public Optional<PatientModel> getPatientById(Integer id) {
+    public Optional<PatientModel> getPatientById(String id) {
         logger.info("Récupération du patient avec l'ID : {}", id);
         return patientRepository.findById(id);
     }
@@ -67,8 +53,17 @@ public class PatientServiceImpl implements PatientService {
      * {@inheritDoc}
      */
     @Override
-    public PatientModel addPatient(PatientModel updatedPatient) {
-        logger.info("Ajout d'un nouveau patient : {}", updatedPatient.toString());
+    public PatientModel insertPatient(PatientModel insertPatient) {
+        logger.info("Ajout d'un nouveau patient : {}", insertPatient.toString());
+        return patientRepository.insert(insertPatient);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PatientModel updatePatient(PatientModel updatedPatient) {
+        logger.info("Mis à jour d'un patient : {}", updatedPatient.toString());
         return patientRepository.save(updatedPatient);
     }
 
@@ -76,7 +71,7 @@ public class PatientServiceImpl implements PatientService {
      * {@inheritDoc}
      */
     @Override
-    public void deletePatient(int id) {
+    public void deletePatient(String id) {
         logger.info("Suppression du patient avec l'ID : {}", id);
         patientRepository.deleteById(id);
     }
