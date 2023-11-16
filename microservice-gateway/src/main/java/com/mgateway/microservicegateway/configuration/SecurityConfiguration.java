@@ -43,6 +43,7 @@ public class SecurityConfiguration {
         http.authorizeExchange()
                 .pathMatchers("/patientFront/**").authenticated()
                 .pathMatchers("/patientBack/**").authenticated()
+                .pathMatchers("/noteBack/**").authenticated()
                 .anyExchange().authenticated()
                 .and()
                 .httpBasic()
