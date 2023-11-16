@@ -67,22 +67,4 @@ public class PatientModel {
     @Field("telephone")
     private String telephone;
 
-    /**
-     * Constructeur utilisé pour créer une instance de PatientModel avec les détails spécifiques du patient.
-     *
-     * @param nom             Nom de famille du patient.
-     * @param prenom          Prénom du patient.
-     * @param dateDeNaissance Date de naissance du patient.
-     * @param genre           Genre du patient.
-     * @param adresse         Adresse du patient.
-     * @param telephone       Numéro de téléphone du patient.
-     */
-    public PatientModel(String nom, String prenom, Date dateDeNaissance, String genre, String adresse, String telephone) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.dateDeNaissance = dateDeNaissance;
-        this.genre = genre;
-        this.adresse = adresse;
-        this.telephone = telephone;
-    }
 }
