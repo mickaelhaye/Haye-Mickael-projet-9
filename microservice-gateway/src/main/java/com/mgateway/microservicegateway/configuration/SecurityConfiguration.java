@@ -44,6 +44,7 @@ public class SecurityConfiguration {
                 .pathMatchers("/patientFront/**").authenticated()
                 .pathMatchers("/patientBack/**").authenticated()
                 .pathMatchers("/noteBack/**").authenticated()
+                .pathMatchers("/diabeteBack/**").authenticated()
                 .anyExchange().authenticated()
                 .and()
                 .httpBasic()
