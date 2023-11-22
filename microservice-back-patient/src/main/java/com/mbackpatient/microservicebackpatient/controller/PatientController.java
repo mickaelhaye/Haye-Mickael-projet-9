@@ -1,12 +1,15 @@
 package com.mbackpatient.microservicebackpatient.controller;
 
 import com.mbackpatient.microservicebackpatient.exceptions.PatientNotFoundException;
+import com.mbackpatient.microservicebackpatient.model.dto.PatientInfoDTO;
 import com.mbackpatient.microservicebackpatient.model.entity.PatientModel;
 import com.mbackpatient.microservicebackpatient.service.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,5 +90,29 @@ public class PatientController {
     public void deletePatient(@PathVariable String id) {
         logger.info("Suppression du patient ID: {}", id);
         patientService.deletePatient(id);
+    }
+
+    /**
+     * Gère la requête GET pour obtenir des informations sur un patient spécifique dans le contexte du diabète.
+     * Cet endpoint reçoit un identifiant unique de patient et renvoie un objet DTO contenant des informations
+     * clés telles que la date de naissance et le genre du patient.
+     *
+     * @param id L'identifiant unique du patient pour lequel les informations sont demandées.
+     * @return PatientInfoDTO Un objet de transfert de données contenant la date de naissance et le genre du patient.
+     */
+    @GetMapping(value = "/getInfoDiabete/{id}")
+    public PatientInfoDTO getInfoDiabete(@PathVariable String id) {
+        logger.info("Requête reçue pour obtenir des informations sur le diabète pour le patient avec l'ID: {}", id);
+        Optional<PatientModel> patientOpt= updatePatientForm(id);
+        if (!patientOpt.isPresent()) {
+            logger.error("Aucun patient trouvé avec l'ID: {}", id);
+            return null;
+        }
+        PatientModel patient = patientOpt.get();
+        PatientInfoDTO patientInfoDTO = new PatientInfoDTO();
+        patientInfoDTO.setDateDeNaissance(patient.getDateDeNaissance());
+        patientInfoDTO.setGenre((patient.getGenre()));
+        logger.info("Informations sur le patient avec l'ID: {} récupérées avec succès", id);
+        return patientInfoDTO;
     }
 }
