@@ -7,10 +7,33 @@
     <title>UpdatePatient</title>
     <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" rel="stylesheet">
+    <style>
+        .color-green { color: green; }
+        .color-orange { color: orange; }
+        .color-red { color: red; }
+        .color-blinking-red { color: red; animation: blinkingText 1.5s infinite; }
+        .color-black { color: black; }
+        @keyframes blinkingText {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+
 </head>
 <body>
 <div class="container">
     <h1 class="text-center">Détails du patient</h1>
+    <div class="text-center my-2" style="font-style: italic;">
+        <span>Risque Diabète : </span>
+        <span th:text="${rapportDiabete}" style="font-size: larger;"
+              th:classappend="${rapportDiabete == 'None' ? 'color-green' :
+                     rapportDiabete == 'Borderline' ? 'color-orange' :
+                     rapportDiabete == 'In Danger' ? 'color-blinking-red' :
+                     rapportDiabete == 'Early onset' ? 'color-red' :
+                     'color-black'}">
+        </span>
+    </div>
     <div class="row">
         <div class="col-md-4 mx-auto mt-2 text-center">
             <form action="#" class="form-horizontal" method="post"
