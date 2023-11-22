@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Contrôleur pour la gestion des notes.
@@ -96,5 +97,23 @@ public class NoteController {
     public void deleteNoteByPatientId(@PathVariable String id) {
         logger.info("Suppression des notes du patient ID: {}", id);
         noteService.deleteNoteByPatientId(id);
+    }
+
+    /**
+     * Gère la requête GET pour obtenir la liste des notes associées à un patient spécifique.
+     * Cet endpoint reçoit un identifiant unique de patient et renvoie une liste de notes médicales liées à ce patient.
+     *
+     * @param id L'identifiant unique du patient pour lequel les notes doivent être récupérées.
+     * @return Une liste de chaînes de caractères, chacune représentant une note médicale du patient spécifié.
+     */
+    @GetMapping(value = "/getListeNotes/{id}")
+    public List<String> getListeNotes(@PathVariable String id) {
+        logger.info("Requête reçue pour obtenir la liste des notes pour le patient avec l'ID: {}", id);
+        List<NoteModel> listNotes = listNote(id);
+        List<String> notes = listNotes.stream()
+                .map(NoteModel::getNote)
+                .collect(Collectors.toList());
+        logger.info("Liste des notes récupérée avec succès pour le patient avec l'ID: {}", id);
+        return notes;
     }
 }

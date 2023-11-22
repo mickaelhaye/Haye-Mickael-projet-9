@@ -11,11 +11,13 @@
         <module name="microservice-gateway" />
         <module name="microservice-back-note" />
         <module name="microservice-back-patient" />
+        <module name="microservice-back-diabete" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="microservice-back-diabete" options="-parameters" />
       <module name="microservice-back-note" options="-parameters" />
       <module name="microservice-back-patient" options="-parameters" />
       <module name="microservice-front" options="-parameters" />
