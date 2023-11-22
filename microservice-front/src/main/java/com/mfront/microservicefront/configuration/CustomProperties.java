@@ -10,12 +10,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Classe de configuration pour les propriétés personnalisées du microservice front.
- * <p>
- * Cette classe est utilisée pour lier les propriétés spécifiées dans les fichiers de configuration
+  * Cette classe est utilisée pour lier les propriétés spécifiées dans les fichiers de configuration
  * (par exemple, application.yml ou application.properties) à cette classe Java. Elle est annotée avec
  * {@code @Configuration} pour indiquer à Spring que c'est une classe de configuration, et avec
  * {@code @ConfigurationProperties} pour spécifier le préfixe des propriétés à lier.
- * </p>
  *
  * @author mickael hayé
  * @version 1.0
@@ -27,10 +25,8 @@ public class CustomProperties {
 
     /**
      * Chemin du gateway.
-     * <p>
      * Cette propriété est utilisée pour spécifier le chemin du gateway
      * que le microservice front pourrait utiliser.
-     * </p>
      */
     private String gatewayPath;
 

@@ -23,11 +23,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Classe de configuration pour la sécurité web du microservice front.
- * <p>
  * Cette classe configure la sécurité web en utilisant Spring Security.
  * Elle est annotée avec {@code @EnableWebSecurity} pour activer la sécurité web et
  * {@code @Configuration} pour indiquer à Spring que c'est une classe de configuration.
- * </p>
  *
  * @author mickael hayé
  * @version 1.0
@@ -57,9 +55,7 @@ public class SecurityConfiguration {
 
     /**
      * Configure et retourne un service de détails d'utilisateur en mémoire.
-     * <p>
      * Cette méthode configure un utilisateur de test en mémoire pour l'authentification.
-     * </p>
      *
      * @return le {@code UserDetailsService} configuré.
      */

@@ -9,13 +9,11 @@ import org.springframework.web.client.RestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
- * Classe de configuration pour les beans utilisés dans le microservice front.
- * <p>
- * Cette classe est utilisée pour définir et configurer les beans nécessaires
- * pour le bon fonctionnement de l'application. Elle est annotée avec
- * {@code @Configuration} pour indiquer à Spring que c'est une classe de configuration.
- * </p>
+ * Classe de configuration pour le microservice front.
+ * Cette classe est marquée avec l'annotation {@link Configuration} pour indiquer qu'elle contient des définitions de bean pour l'application Spring.
+ * Elle fournit la configuration nécessaire pour initialiser et utiliser divers composants et services dans l'application.
  *
  * @author mickael hayé
  * @version 1.0
@@ -25,12 +23,9 @@ public class AppConfig {
     private static final Logger logger = LoggerFactory.getLogger(AppConfig.class);
 
     /**
-     * Crée et retourne un bean {@code RestTemplate}.
-     * <p>
-     * Le bean {@code RestTemplate} est utilisé pour effectuer des appels HTTP
-     * dans une application Spring. Cette méthode crée une nouvelle instance de
-     * {@code RestTemplate} et la retourne pour être gérée par le conteneur Spring.
-     * </p>
+     * Crée et configure un bean RestTemplate pour les appels HTTP.
+     * Le RestTemplate est un client HTTP centralisé utilisé pour effectuer des requêtes et consommer des services RESTful.
+     * Cette méthode met en place un RestTemplate standard qui peut être injecté et réutilisé dans toute l'application.
      *
      * @return une nouvelle instance de {@code RestTemplate}.
      */

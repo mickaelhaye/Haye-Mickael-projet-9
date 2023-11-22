@@ -12,12 +12,10 @@ import java.util.Date;
 
 /**
  * Modèle représentant un patient.
- * <p>
- * Cette classe contient les informations de base sur un patient,
+  * Cette classe contient les informations de base sur un patient,
  * y compris son identifiant, nom, prénom, date de naissance,
  * genre, adresse et numéro de téléphone.
- * </p>
- *
+  *
  * @author mickael hayé
  * @version 1.0
  */
