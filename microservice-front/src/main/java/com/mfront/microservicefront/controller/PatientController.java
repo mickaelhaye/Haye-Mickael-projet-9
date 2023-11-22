@@ -91,8 +91,16 @@ public class PatientController {
         headers.set("Authorization", authHeader);
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
         ResponseEntity<PatientModel> response = restTemplate.exchange(url, HttpMethod.GET, entity, PatientModel.class);
+
+        logger.info("Récupération du apport de diabète pour le patient avec l'ID: {}", id);
+        url = prop.getGatewayPath() + "/diabeteBack/risque/" + id;
+        entity = new HttpEntity<>("body", headers);
+        ResponseEntity<String> responseString = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        String rapportDiabete =responseString.getBody();
+
         model.addAttribute("patient", response.getBody());
         model.addAttribute("dateDuJour", dateService.dateDuJour());
+        model.addAttribute("rapportDiabete", rapportDiabete);
         return "patient/update";
     }
 
@@ -148,7 +156,6 @@ public class PatientController {
     @PostMapping("/add")
     public String addPatient(@Valid PatientModel patient, Model model, @RequestHeader("Authorization") String authHeader) {
         logger.info("Ajout d'un nouveau patient.");
-        //todo à valider
         patient.setId(null);
         String url = prop.getGatewayPath() + "/patientBack/add";
         HttpHeaders headers = new HttpHeaders();
@@ -176,9 +183,6 @@ public class PatientController {
 
         //Suppression des notes concernant le patient
         url = prop.getGatewayPath() + "/noteBack/deleteAll/" + id;
-        headers = new HttpHeaders();
-        headers.set("Authorization", authHeader);
-        entity = new HttpEntity<>("body", headers);
         restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
 
         return "redirect:" + prop.getGatewayPath() + "/patientFront/list";
