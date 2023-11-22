@@ -16,9 +16,9 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 /**
- * Implémentation du service pour les opérations liées à {@link PatientModel}.
- * Cette classe met en œuvre les méthodes définies dans l'interface {@link PatientService}
- * pour interagir avec le dépôt de données de patients.
+ * Implémentation du service PatientService.
+ * Cette classe gère les opérations CRUD pour les objets PatientModel, en interaction avec PatientRepository.
+ * Elle fournit des méthodes pour récupérer, insérer, mettre à jour, et supprimer des patients.
  *
  * @author mickael hayé
  * @version 1.0
@@ -32,7 +32,9 @@ public class PatientServiceImpl implements PatientService {
     private PatientRepository patientRepository;
 
     /**
-     * {@inheritDoc}
+     * Récupère tous les patients enregistrés dans la base de données.
+     *
+     * @return Iterable de PatientModel représentant tous les patients.
      */
     @Override
     public Iterable<PatientModel> getPatients() {
@@ -41,7 +43,10 @@ public class PatientServiceImpl implements PatientService {
     }
 
     /**
-     * {@inheritDoc}
+     * Récupère un patient spécifique par son identifiant.
+     *
+     * @param id L'identifiant unique du patient.
+     * @return Optional contenant le PatientModel, s'il est trouvé.
      */
     @Override
     public Optional<PatientModel> getPatientById(String id) {
@@ -50,7 +55,10 @@ public class PatientServiceImpl implements PatientService {
     }
 
     /**
-     * {@inheritDoc}
+     * Insère un nouveau patient dans la base de données.
+     *
+     * @param insertPatient L'objet PatientModel à insérer.
+     * @return Le PatientModel inséré.
      */
     @Override
     public PatientModel insertPatient(PatientModel insertPatient) {
@@ -59,7 +67,10 @@ public class PatientServiceImpl implements PatientService {
     }
 
     /**
-     * {@inheritDoc}
+     * Met à jour les informations d'un patient existant.
+     *
+     * @param updatedPatient L'objet PatientModel avec les informations mises à jour.
+     * @return Le PatientModel mis à jour.
      */
     @Override
     public PatientModel updatePatient(PatientModel updatedPatient) {
@@ -68,7 +79,9 @@ public class PatientServiceImpl implements PatientService {
     }
 
     /**
-     * {@inheritDoc}
+     * Supprime un patient de la base de données par son identifiant.
+     *
+     * @param id L'identifiant du patient à supprimer.
      */
     @Override
     public void deletePatient(String id) {
