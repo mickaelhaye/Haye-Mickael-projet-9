@@ -41,10 +41,6 @@ public class SecurityConfiguration {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         logger.info("Configuration des règles de sécurité.");
         http.authorizeExchange()
-                .pathMatchers("/patientFront/**").authenticated()
-                .pathMatchers("/patientBack/**").authenticated()
-                .pathMatchers("/noteBack/**").authenticated()
-                .pathMatchers("/diabeteBack/**").authenticated()
                 .anyExchange().authenticated()
                 .and()
                 .httpBasic()
