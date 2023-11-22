@@ -7,12 +7,10 @@ package com.mbackpatient.microservicebackpatient.service.impl;
 import com.mbackpatient.microservicebackpatient.model.entity.PatientModel;
 import com.mbackpatient.microservicebackpatient.repository.PatientRepository;
 import com.mbackpatient.microservicebackpatient.service.PatientService;
-import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 /**

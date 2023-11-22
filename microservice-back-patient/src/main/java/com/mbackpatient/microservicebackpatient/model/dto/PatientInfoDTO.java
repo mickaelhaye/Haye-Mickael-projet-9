@@ -3,9 +3,7 @@ package com.mbackpatient.microservicebackpatient.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 
 @Data

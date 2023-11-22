@@ -4,9 +4,7 @@
 package com.mfront.microservicefront.controller;
 
 import com.mfront.microservicefront.configuration.CustomProperties;
-import com.mfront.microservicefront.model.PatientModel;
 import com.mfront.microservicefront.service.DateService;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 /**
  * Contrôleur pour la gestion des requêtes liées au diabète dans le microservice front.
@@ -68,8 +63,7 @@ public class DiabeteController {
         headers.set("Authorization", authHeader);
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-        String risque =  response.getBody();
-        return risque;
+        return  response.getBody();
     }
 
 }

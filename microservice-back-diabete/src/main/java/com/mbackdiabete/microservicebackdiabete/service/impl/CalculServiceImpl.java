@@ -120,7 +120,7 @@ public class CalculServiceImpl implements CalculService {
             // Fermeture du BufferedReader
             reader.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.info("Problème avec l'accès au fichier contenant la liste des expressions de recherche diabète");
         }
 
         //Les familles d'expression contenues dans la liste de notes sont chargées dans la liste ExpressionsContenus
@@ -160,9 +160,9 @@ public class CalculServiceImpl implements CalculService {
         Calendar calStr1 = Calendar.getInstance();
         Calendar calStr2 = Calendar.getInstance();
 
-        Date date2 = null;
-        int nbMois = 0;
-        int nbAnnees = 0;
+        Date date2;
+        int nbMois=0;
+        int nbAnnees=0;
 
         try {
             date2 = new SimpleDateFormat("dd/MM/yyyy").parse(dateActuelle);
@@ -172,7 +172,6 @@ public class CalculServiceImpl implements CalculService {
         calStr1.setTime(dateNaissance);
         calStr2.setTime(date2);
 
-        nbMois = 0;
         while (calStr1.before(calStr2)) {
             calStr1.add(GregorianCalendar.MONTH, 1);
             if (calStr1.before(calStr2) || calStr1.equals(calStr2)) {

@@ -8,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,9 +35,7 @@ public class PatientController {
      */
     @GetMapping(value = "/list")
     public List<PatientModel> listPatient() {
-
-        List<PatientModel> patients = (List<PatientModel>) patientService.getPatients();
-        return patients;
+        return (List<PatientModel>) patientService.getPatients();
     }
 
     /**

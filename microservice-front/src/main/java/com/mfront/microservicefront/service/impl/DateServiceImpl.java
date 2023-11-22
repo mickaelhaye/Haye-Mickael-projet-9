@@ -31,7 +31,6 @@ public class DateServiceImpl implements DateService {
         calendar.setTime(new java.util.Date());
         String formatDate = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(formatDate);
-        String dateActuelle = sdf.format(calendar.getTime());
-        return dateActuelle;
+        return sdf.format(calendar.getTime());
     }
 }

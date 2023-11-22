@@ -17,11 +17,6 @@ import org.springframework.context.annotation.Configuration;
 public class CustomProperties {
     private static final Logger logger = LoggerFactory.getLogger(CustomProperties.class);
     private String gatewayPath;
-    /**
-     * Obtient le chemin du gateway.
-     *
-     * @return String - Le chemin actuel du gateway.
-     */
     private String termesDiabeteFilePath;
 
     /**

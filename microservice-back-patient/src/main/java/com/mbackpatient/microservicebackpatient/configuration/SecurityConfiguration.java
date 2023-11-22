@@ -1,6 +1,5 @@
 package com.mbackpatient.microservicebackpatient.configuration;
 
-import com.mbackpatient.microservicebackpatient.controller.PatientController;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
