@@ -65,6 +65,7 @@ public class NoteController {
         List<NoteModel> notes = Arrays.asList(response.getBody());
         model.addAttribute("notes", notes);
         model.addAttribute("nomPatient", nomPatient);
+        model.addAttribute("idPatient", idPatient);
         return "note/list";
     }
 
@@ -86,6 +87,7 @@ public class NoteController {
         ResponseEntity<NoteModel> response = restTemplate.exchange(url, HttpMethod.GET, entity, NoteModel.class);
         model.addAttribute("note", response.getBody());
         model.addAttribute("nomPatient", nomPatient);
+        model.addAttribute("idPatient", idPatient);
         return "note/update";
     }
 
@@ -123,6 +125,7 @@ public class NoteController {
         note.setIdPatient(idPatient);
         model.addAttribute("note", note);
         model.addAttribute("nomPatient", nomPatient);
+        model.addAttribute("idPatient", idPatient);
         return "note/add";
     }
 
@@ -137,7 +140,6 @@ public class NoteController {
     @PostMapping("/add")
     public String addNote(@Valid NoteModel note, Model model, @RequestHeader("Authorization") String authHeader) {
         logger.info("Ajout d'une nouvelle note en cours");
-        //todo à valider
         note.setId(null);
         note.setIdPatient(idPatient);
         String url = prop.getGatewayPath() + "/noteBack/add";
