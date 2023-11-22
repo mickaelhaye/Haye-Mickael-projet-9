@@ -30,6 +30,7 @@
                     <div class="col-sm-12">
                         <input th:field="*{id}" type="hidden">
                         <input class="btn btn-primary btn-sm" type="submit" value="Update Note">
+                        <a class="btn btn-primary btn-sm" th:href="@{/patientFront/updateForm/{id}(id=${idPatient})}">VisuFiche</a>
                     </div>
                 </div>
             </form>
