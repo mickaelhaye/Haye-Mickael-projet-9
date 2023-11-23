@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
@@ -69,7 +70,14 @@ public class PatientController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
-        ResponseEntity<PatientModel[]> response = restTemplate.exchange(url, HttpMethod.GET, entity, PatientModel[].class);
+        ResponseEntity<PatientModel[]> response;
+        try{response = restTemplate.exchange(url, HttpMethod.GET, entity, PatientModel[].class);
+        }catch (
+        RestClientException e) {
+            logger.error("Erreur de connexion au microservice : " + e.getMessage());
+            model.addAttribute("errorMessage", "Impossible de se connecter au service de patients.");
+            return "error/errorPage";
+        }
         List<PatientModel> patients = Arrays.asList(response.getBody());
         model.addAttribute("patients", patients);
         return "patient/list";
@@ -90,12 +98,25 @@ public class PatientController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
-        ResponseEntity<PatientModel> response = restTemplate.exchange(url, HttpMethod.GET, entity, PatientModel.class);
+        ResponseEntity<PatientModel> response;
+        try{response = restTemplate.exchange(url, HttpMethod.GET, entity, PatientModel.class);
+        }catch (
+        RestClientException e) {
+            logger.error("Erreur de connexion au microservice : " + e.getMessage());
+            model.addAttribute("errorMessage", "Impossible de se connecter au service de patients.");
+            return "error/errorPage";
+        }
 
         logger.info("Récupération du apport de diabète pour le patient avec l'ID: {}", id);
         url = prop.getGatewayPath() + "/diabeteBack/risque/" + id;
-        entity = new HttpEntity<>("body", headers);
-        ResponseEntity<String> responseString = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> responseString;
+        try{ responseString = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        }catch (
+        RestClientException e) {
+            logger.error("Erreur de connexion au microservice : " + e.getMessage());
+            model.addAttribute("errorMessage", "Impossible de se connecter au service de diabete ou notes.");
+            return "error/errorPage";
+        }
         String rapportDiabete =responseString.getBody();
 
         model.addAttribute("patient", response.getBody());
@@ -119,8 +140,14 @@ public class PatientController {
         String url = prop.getGatewayPath() + "/patientBack/update/" + id;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
-        HttpEntity<PatientModel> entity = new HttpEntity<>(patient, headers);
-        restTemplate.exchange(url, HttpMethod.POST, entity, Void.class);
+        HttpEntity<PatientModel>entity = new HttpEntity<>(patient, headers);
+        try{restTemplate.exchange(url, HttpMethod.POST, entity, Void.class);
+        }catch (
+        RestClientException e) {
+            logger.error("Erreur de connexion au microservice : " + e.getMessage());
+            model.addAttribute("errorMessage", "Impossible de se connecter au service patients.");
+            return "error/errorPage";
+        }
         return "redirect:" + prop.getGatewayPath() + "/patientFront/list";
     }
 
@@ -132,13 +159,6 @@ public class PatientController {
      */
     @GetMapping("/add")
     public String addPatientForm(Model model) {
-        // récupération date actuelle
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(new Date());
-        String formatDate = "yyyy-MM-dd";
-        SimpleDateFormat sdf = new SimpleDateFormat(formatDate);
-        String dateActuelle = sdf.format(calendar.getTime());
-
         logger.info("Affichage du formulaire pour ajouter un nouveau patient.");
         model.addAttribute("patient", new PatientModel());
         model.addAttribute("dateDuJour", dateService.dateDuJour());
@@ -161,7 +181,13 @@ public class PatientController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<PatientModel> entity = new HttpEntity<>(patient, headers);
-        restTemplate.postForEntity(url, entity, Void.class);
+        try{restTemplate.postForEntity(url, entity, Void.class);
+        }catch (
+        RestClientException e) {
+            logger.error("Erreur de connexion au microservice : " + e.getMessage());
+            model.addAttribute("errorMessage", "Impossible de se connecter au service patients.");
+            return "error/errorPage";
+        }
         return "redirect:" + prop.getGatewayPath() + "/patientFront/list";
     }
 
@@ -173,13 +199,19 @@ public class PatientController {
      * @return Redirige vers la liste des patients après la suppression.
      */
     @GetMapping("/delete/{id}")
-    public String deletePatient(@PathVariable String id, @RequestHeader("Authorization") String authHeader) {
+    public String deletePatient(@PathVariable String id, Model model, @RequestHeader("Authorization") String authHeader) {
         logger.info("Suppression du patient avec l'ID: {}", id);
         String url = prop.getGatewayPath() + "/patientBack/delete/" + id;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
-        restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
+        try{restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
+        }catch (
+        RestClientException e) {
+            logger.error("Erreur de connexion au microservice : " + e.getMessage());
+            model.addAttribute("errorMessage", "Impossible de se connecter au service patients.");
+            return "error/errorPage";
+        }
 
         //Suppression des notes concernant le patient
         url = prop.getGatewayPath() + "/noteBack/deleteAll/" + id;

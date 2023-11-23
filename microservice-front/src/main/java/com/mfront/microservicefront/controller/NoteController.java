@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.List;
@@ -61,7 +62,14 @@ public class NoteController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
-        ResponseEntity<NoteModel[]> response = restTemplate.exchange(url, HttpMethod.GET, entity, NoteModel[].class);
+        ResponseEntity<NoteModel[]> response;
+        try{
+            response = restTemplate.exchange(url, HttpMethod.GET, entity, NoteModel[].class);
+        }catch (RestClientException e) {
+            logger.error("Erreur de connexion au microservice : " + e.getMessage());
+            model.addAttribute("errorMessage", "Impossible de se connecter au service de notes.");
+            return "error/errorPage";
+        }
         List<NoteModel> notes = Arrays.asList(response.getBody());
         model.addAttribute("notes", notes);
         model.addAttribute("nomPatient", nomPatient);
@@ -84,7 +92,14 @@ public class NoteController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
-        ResponseEntity<NoteModel> response = restTemplate.exchange(url, HttpMethod.GET, entity, NoteModel.class);
+        ResponseEntity<NoteModel> response;
+        try {
+            response = restTemplate.exchange(url, HttpMethod.GET, entity, NoteModel.class);
+        }catch (RestClientException e) {
+            logger.error("Erreur de connexion au microservice : " + e.getMessage());
+            model.addAttribute("errorMessage", "Impossible de se connecter au service de notes.");
+            return "error/errorPage";
+        }
         model.addAttribute("note", response.getBody());
         model.addAttribute("nomPatient", nomPatient);
         model.addAttribute("idPatient", idPatient);
@@ -108,7 +123,12 @@ public class NoteController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<NoteModel> entity = new HttpEntity<>(note, headers);
-        restTemplate.exchange(url, HttpMethod.POST, entity, Void.class);
+        try{restTemplate.exchange(url, HttpMethod.POST, entity, Void.class);
+        }catch (RestClientException e) {
+            logger.error("Erreur de connexion au microservice : " + e.getMessage());
+            model.addAttribute("errorMessage", "Impossible de se connecter au service de notes.");
+            return "error/errorPage";
+        }
         return "redirect:" + prop.getGatewayPath() + "/noteFront/list/"+idPatient+"/"+nomPatient;
     }
 
@@ -146,7 +166,12 @@ public class NoteController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<NoteModel> entity = new HttpEntity<>(note, headers);
-        restTemplate.postForEntity(url, entity, Void.class);
+        try{restTemplate.postForEntity(url, entity, Void.class);
+        }catch (RestClientException e) {
+            logger.error("Erreur de connexion au microservice : " + e.getMessage());
+            model.addAttribute("errorMessage", "Impossible de se connecter au service de notes.");
+            return "error/errorPage";
+        }
         return "redirect:" + prop.getGatewayPath() + "/noteFront/list/"+idPatient+"/"+nomPatient;
     }
 
@@ -158,13 +183,18 @@ public class NoteController {
      * @return Redirection vers la liste des notes du patient concerné.
      */
     @GetMapping("/delete/{id}")
-    public String deleteNote(@PathVariable String id, @RequestHeader("Authorization") String authHeader) {
+    public String deleteNote(@PathVariable String id, Model model, @RequestHeader("Authorization") String authHeader) {
         logger.info("Demande de suppression de la note ID: {}", id);
         String url = prop.getGatewayPath() + "/noteBack/delete/" + id;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
-        restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
+        try{restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
+        }catch (RestClientException e) {
+            logger.error("Erreur de connexion au microservice : " + e.getMessage());
+            model.addAttribute("errorMessage", "Impossible de se connecter au service de notes.");
+            return "error/errorPage";
+        }
         return "redirect:" + prop.getGatewayPath() + "/noteFront/list/"+idPatient+"/"+nomPatient;
     }
 }
