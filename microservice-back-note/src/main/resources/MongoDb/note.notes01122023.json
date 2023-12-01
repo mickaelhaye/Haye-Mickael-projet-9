@@ -1,0 +1,75 @@
+[{
+  "_id": {
+    "$oid": "6554cad78d4ac35957755442"
+  },
+  "patid": "1",
+  "note": "Le patient déclare qu'il 'se sent très bien' Poids égal ou inférieur au poids recommandé",
+  "_class": "com.mbacknote.microservicebacknote.model.entity.NoteModel"
+},
+{
+  "_id": {
+    "$oid": "6554cb0a8d4ac35957755443"
+  },
+  "patid": "2",
+  "note": "Le patient déclare qu'il ressent beaucoup de stress au travail Il se plaint également que son audition est anormale dernièrement",
+  "_class": "com.mbacknote.microservicebacknote.model.entity.NoteModel"
+},
+{
+  "_id": {
+    "$oid": "6554cb198d4ac35957755444"
+  },
+  "patid": "2",
+  "patient": "TestBordeline",
+  "note": "Le patient déclare avoir fait une réaction aux médicaments au cours des 3 derniers mois Il remarque également que son audition continue d'être anormale",
+  "_class": "com.mbacknote.microservicebacknote.model.entity.NoteModel"
+},
+{
+  "_id": {
+    "$oid": "6554cb388d4ac35957755445"
+  },
+  "patid": "3",
+  "patient": "TestInDanger",
+  "note": "Le patient déclare qu'il fume depuis peu",
+  "_class": "com.mbacknote.microservicebacknote.model.entity.NoteModel"
+},
+{
+  "_id": {
+    "$oid": "6554cb468d4ac35957755446"
+  },
+  "patid": "3",
+  "patient": "TestInDanger",
+  "note": "Le patient déclare qu'il est fumeur et qu'il a cessé de fumer l'année dernière Il se plaint également de crises d’apnée respiratoire anormales Tests de laboratoire indiquant un taux de cholestérol LDL élevé",
+  "_class": "com.mbacknote.microservicebacknote.model.entity.NoteModel"
+},
+{
+  "_id": {
+    "$oid": "6554cb678d4ac35957755447"
+  },
+  "patid": "4",
+  "note": "Le patient déclare qu'il lui est devenu difficile de monter les escaliers Il se plaint également d’être essoufflé Tests de laboratoire indiquant que les anticorps sont élevés Réaction aux médicaments",
+  "_class": "com.mbacknote.microservicebacknote.model.entity.NoteModel"
+},
+{
+  "_id": {
+    "$oid": "6554cb738d4ac35957755448"
+  },
+  "patid": "4",
+  "note": "Le patient déclare qu'il a mal au dos lorsqu'il reste assis pendant longtemps",
+  "_class": "com.mbacknote.microservicebacknote.model.entity.NoteModel"
+},
+{
+  "_id": {
+    "$oid": "6554cb868d4ac35957755449"
+  },
+  "patid": "4",
+  "note": "Le patient déclare avoir commencé à fumer depuis peu Hémoglobine A1C supérieure au niveau recommandé",
+  "_class": "com.mbacknote.microservicebacknote.model.entity.NoteModel"
+},
+{
+  "_id": {
+    "$oid": "6554cb8c8d4ac3595775544a"
+  },
+  "patid": "4",
+  "note": "Taille, Poids, Cholestérol, Vertige et Réaction",
+  "_class": "com.mbacknote.microservicebacknote.model.entity.NoteModel"
+}]
