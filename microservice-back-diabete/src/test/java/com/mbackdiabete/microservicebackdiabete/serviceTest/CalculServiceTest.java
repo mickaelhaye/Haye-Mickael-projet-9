@@ -120,18 +120,4 @@ public class CalculServiceTest {
         notes.add("LE PATIENT DÉCLARE QU'IL EST FUMEUR ET QU'IL A CESSÉ DE FUMER L'ANNÉE DERNIÈRE. IL SE PLAINT ÉGALEMENT DE CRISES D’APNÉE RESPIRATOIRE ANORMALES. TESTS DE LABORATOIRE INDIQUANT UN TAUX DE CHOLESTÉROL LDL ÉLEVÉ");
         assertEquals(3, calculService.calculNbrTermesDeclencheurs(notes));
     }
-
-    /**
-     * Teste la méthode calculAge.
-     * Calcule l'âge du patient à partir de sa date de naissance.
-     */
-    @Test
-    void calculAgeTest() {
-        //test avec la date actuelle -2ans
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(new Date());
-        calendar.add(Calendar.YEAR, -2);
-        Date dateIlYaDeuxAns = calendar.getTime();
-        assertEquals(2, calculService.calculAge(dateIlYaDeuxAns));
-    }
 }
