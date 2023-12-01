@@ -63,7 +63,7 @@ public class NoteControllerTest {
         NoteModel note2 = new NoteModel();
         note2.setIdPatient("2");
         note2.setNote("note2");
-        NoteModel[] notes = {note1, note2}; // Suppose you have some dummy notes
+        NoteModel[] notes = {note1, note2};
         //cas ok
         when(restTemplate.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), eq(NoteModel[].class))).thenReturn(new ResponseEntity<>(notes, HttpStatus.OK));
 
@@ -84,7 +84,7 @@ public class NoteControllerTest {
     @Test
     public void updateNoteFormTest() throws Exception {
         String id = "1";
-        NoteModel noteModel = new NoteModel(); // Créez une instance de NoteModel pour le test
+        NoteModel noteModel = new NoteModel();
         noteModel.setNote("note test");
         noteModel.setIdPatient("1");
         noteModel.setId("1");
