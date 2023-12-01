@@ -21,6 +21,9 @@ import java.util.List;
 /**
  * Contrôleur pour la gestion des notes.
  * Gère les requêtes liées aux notes des patients.
+ *
+ * @author mickael hayé
+ * @version 1.0
  */
 @Controller
 @RequestMapping("noteFront")

@@ -26,10 +26,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Contrôleur gérant les interactions liées aux patients pour le front-end.
- * <p>
  * Cette classe gère les routes relatives aux patients, notamment l'affichage, l'ajout,
  * la mise à jour et la suppression des patients.
- * </p>
  *
  * @author mickael hayé
  * @version 1.0
