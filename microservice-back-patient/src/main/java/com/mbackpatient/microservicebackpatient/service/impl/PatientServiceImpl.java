@@ -49,32 +49,21 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Optional<PatientModel> getPatientById(String id) {
         logger.info("Récupération du patient avec l'ID : {}", id);
-        return patientRepository.findById(id);
+        return patientRepository.findById(Integer.parseInt(id));
     }
 
     /**
      * Insère un nouveau patient dans la base de données.
      *
-     * @param insertPatient L'objet PatientModel à insérer.
+     * @param patient L'objet PatientModel à insérer.
      * @return Le PatientModel inséré.
      */
     @Override
-    public PatientModel insertPatient(PatientModel insertPatient) {
-        logger.info("Ajout d'un nouveau patient : {}", insertPatient.toString());
-        return patientRepository.insert(insertPatient);
+    public PatientModel savePatient(PatientModel patient) {
+        logger.info("Ajout ou Update d'un nouveau patient : {}", patient.toString());
+        return patientRepository.save(patient);
     }
 
-    /**
-     * Met à jour les informations d'un patient existant.
-     *
-     * @param updatedPatient L'objet PatientModel avec les informations mises à jour.
-     * @return Le PatientModel mis à jour.
-     */
-    @Override
-    public PatientModel updatePatient(PatientModel updatedPatient) {
-        logger.info("Mis à jour d'un patient : {}", updatedPatient.toString());
-        return patientRepository.save(updatedPatient);
-    }
 
     /**
      * Supprime un patient de la base de données par son identifiant.
@@ -84,6 +73,6 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void deletePatient(String id) {
         logger.info("Suppression du patient avec l'ID : {}", id);
-        patientRepository.deleteById(id);
+        patientRepository.deleteById(Integer.parseInt(id));
     }
 }

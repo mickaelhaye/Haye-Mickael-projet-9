@@ -63,7 +63,7 @@ public class PatientController {
      */
     @PostMapping(value = "/update/{id}")
     public PatientModel updatePatient(@RequestBody PatientModel updatedPatient) {
-        return patientService.updatePatient(updatedPatient);
+        return patientService.savePatient(updatedPatient);
     }
 
     /**
@@ -74,7 +74,7 @@ public class PatientController {
      */
     @PostMapping(value = "/add")
     public PatientModel addPatient(@RequestBody PatientModel newPatient) {
-        return patientService.insertPatient(newPatient);
+        return patientService.savePatient(newPatient);
     }
 
     /**

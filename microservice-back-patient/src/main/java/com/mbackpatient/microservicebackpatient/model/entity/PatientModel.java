@@ -1,11 +1,11 @@
 package com.mbackpatient.microservicebackpatient.model.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -21,50 +21,55 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "patients")
+@Entity
+@DynamicUpdate
+@Table(name = "patients")
 public class PatientModel {
 
     /**
      * Identifiant unique du patient.
      */
+    @jakarta.persistence.Id
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "patient_id")
+    private int id;
 
     /**
      * Nom de famille du patient.
      */
-    @Field("nom")
+    @Column(name ="nom")
     private String nom;
 
     /**
      * Prénom du patient.
      */
-    @Field("prenom")
+    @Column(name ="prenom")
     private String prenom;
 
     /**
      * Date de naissance du patient, stockée sous forme de chaîne.
      */
-    @Field("date_de_naissance")
+    @Column(name ="date_de_naissance")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateDeNaissance;
 
     /**
      * Genre du patient.
      */
-    @Field("genre")
+    @Column(name ="genre")
     private String genre;
 
     /**
      * Adresse du patient.
      */
-    @Field("adresse")
+    @Column(name ="adresse")
     private String adresse;
 
     /**
      * Numéro de téléphone du patient.
      */
-    @Field("telephone")
+    @Column(name ="telephone")
     private String telephone;
 
 }

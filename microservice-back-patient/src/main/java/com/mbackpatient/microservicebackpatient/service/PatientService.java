@@ -35,18 +35,11 @@ public interface PatientService {
     /**
      * Ajoute un patient.
      *
-     * @param insertPatient le modèle du patient à ajouter
+     * @param patient le modèle du patient à ajouter
      * @return le patient ajouté
      */
-    PatientModel insertPatient(PatientModel insertPatient);
+    PatientModel savePatient(PatientModel patient);
 
-    /**
-     * Met à jour un patient.
-     *
-     * @param updatedPatient le modèle du patient à mettre à jour
-     * @return le patient mis à jour
-     */
-    PatientModel updatePatient(PatientModel updatedPatient);
 
     /**
      * Supprime un patient par son identifiant.

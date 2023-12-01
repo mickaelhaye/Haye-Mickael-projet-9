@@ -64,10 +64,10 @@ public class PatientControllerTest {
      */
     @Test
     public void updatePatientFormTest() throws Exception {
-        String idPatient = "6554ca45e5d78f1ae6f39f49";
-        mockMvc.perform(get("/patientBack/updateForm/" + idPatient).with(user("user1"))).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.id", is(idPatient))).andExpect(jsonPath("$.nom", is("TestBordeline")));
+        int idPatient = 1;
+        mockMvc.perform(get("/patientBack/updateForm/" + idPatient).with(user("user1"))).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.nom", is("TestNone")));
 
-        idPatient = "6554cad78d4ac35";
+        idPatient = 999;
         mockMvc.perform(get("/patientBack/updateForm/" + idPatient).with(user("user1"))).andDo(print()).andExpect(status().isNotFound());
     }
 
@@ -77,17 +77,17 @@ public class PatientControllerTest {
      */
     @Test
     public void updatePatientTest() throws Exception {
-        String patientId = "6554ca6de5d78f1ae6f39f4a";
+        int patientId = 4;
         PatientModel updatedPatient = new PatientModel();
         updatedPatient.setId(patientId);
         updatedPatient.setNom("TestNom");
 
         // Exécution du test
-        mockMvc.perform(post("/patientBack/update/" + patientId).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(updatedPatient)).with(user("user1"))).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.id", is(patientId))).andExpect(jsonPath("$.nom", is("TestNom")));
+        mockMvc.perform(post("/patientBack/update/" + patientId).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(updatedPatient)).with(user("user1"))).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.nom", is("TestNom")));
 
         // Exécution du test avec changement de la note pour un autre test
         updatedPatient.setNom("TestNom2");
-        mockMvc.perform(post("/patientBack/update/" + patientId).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(updatedPatient)).with(user("user1"))).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.id", is(patientId))).andExpect(jsonPath("$.nom", is("TestNom2")));
+        mockMvc.perform(post("/patientBack/update/" + patientId).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(updatedPatient)).with(user("user1"))).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.nom", is("TestNom2")));
 
     }
 
@@ -107,7 +107,7 @@ public class PatientControllerTest {
         // Extraction de l'ID de la note ajoutée
         String jsonResponse = result.getResponse().getContentAsString();
         PatientModel addedPatient = objectMapper.readValue(jsonResponse, PatientModel.class);
-        String patientId = addedPatient.getId();
+        int patientId = addedPatient.getId();
 
         // Suppression de la note
         mockMvc.perform(delete("/patientBack/delete/" + patientId).with(user("user1"))).andExpect(status().isOk());
@@ -120,9 +120,9 @@ public class PatientControllerTest {
     @Test
     public void getInfoDiabeteTest() throws Exception {
 
-        String patientId = "6554caa1e5d78f1ae6f39f4b";
+        String patientId = "1";
         mockMvc.perform(get("/patientBack/getInfoDiabete/" + patientId).with(user("user1"))).andExpect(status().isOk()).andExpect(jsonPath("$.genre").value("F"));
-        patientId = "6554caa1";
+        patientId = "999";
         mockMvc.perform(get("/patientBack/getInfoDiabete/" + patientId).with(user("user1"))).andExpect(status().isNotFound());
 
     }
