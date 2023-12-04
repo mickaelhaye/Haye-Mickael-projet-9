@@ -56,7 +56,7 @@ public class NoteControllerTest {
      */
     @Test
     public void listNoteTest() throws Exception {
-        String idPatient = "6554caa1e5d78f1ae6f39f4b";
+        String idPatient = "4";
         mockMvc.perform(get("/noteBack/list/" + idPatient).with(user("user1"))).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(3))).andExpect(jsonPath("$[0].idPatient", is(idPatient))).andExpect(jsonPath("$[0].note", is("Le patient déclare qu'il lui est devenu difficile de monter les escaliers Il se plaint également d’être essoufflé Tests de laboratoire indiquant que les anticorps sont élevés Réaction aux médicaments")));
     }
 
@@ -67,7 +67,7 @@ public class NoteControllerTest {
     @Test
     public void updateNoteFormTest() throws Exception {
         String idNote = "6554cad78d4ac35957755442";
-        mockMvc.perform(get("/noteBack/updateForm/" + idNote).with(user("user1"))).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.id", is("6554cad78d4ac35957755442"))).andExpect(jsonPath("$.idPatient", is("6554ca1ce5d78f1ae6f39f48"))).andExpect(jsonPath("$.note", is("Le patient déclare qu'il 'se sent très bien' Poids égal ou inférieur au poids recommandé")));
+        mockMvc.perform(get("/noteBack/updateForm/" + idNote).with(user("user1"))).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.id", is("6554cad78d4ac35957755442"))).andExpect(jsonPath("$.idPatient", is("1"))).andExpect(jsonPath("$.note", is("Le patient déclare qu'il 'se sent très bien' Poids égal ou inférieur au poids recommandé")));
 
         idNote = "6554cad78d4ac35";
         mockMvc.perform(get("/noteBack/updateForm/" + idNote).with(user("user1"))).andDo(print()).andExpect(status().isNotFound());
@@ -156,7 +156,7 @@ public class NoteControllerTest {
      */
     @Test
     public void getListeNotesTest() throws Exception {
-        String patientId = "6554caa1e5d78f1ae6f39f4b";
+        String patientId = "4";
 
         // Exécution de la requête GET pour récupérer la liste des notes
         mockMvc.perform(get("/noteBack/getListeNotes/" + patientId).with(user("user1"))).andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(3))).andExpect(jsonPath("$[0]", is("Le patient déclare qu'il lui est devenu difficile de monter les escaliers Il se plaint également d’être essoufflé Tests de laboratoire indiquant que les anticorps sont élevés Réaction aux médicaments")));
