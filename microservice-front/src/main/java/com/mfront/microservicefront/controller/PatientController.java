@@ -146,7 +146,7 @@ public class PatientController {
             model.addAttribute("errorMessage", "Impossible de se connecter au service patients.");
             return "error/errorPage";
         }
-        return "redirect:" + prop.getGatewayPath() + "/patientFront/list";
+        return "redirect:" + prop.getGatewayPathRedirect() + "/patientFront/list";
     }
 
     /**
@@ -186,7 +186,7 @@ public class PatientController {
             model.addAttribute("errorMessage", "Impossible de se connecter au service patients.");
             return "error/errorPage";
         }
-        return "redirect:" + prop.getGatewayPath() + "/patientFront/list";
+        return "redirect:" + prop.getGatewayPathRedirect() + "/patientFront/list";
     }
 
     /**
@@ -215,6 +215,6 @@ public class PatientController {
         url = prop.getGatewayPath() + "/noteBack/deleteAll/" + id;
         restTemplate.exchange(url, HttpMethod.DELETE, entity, Void.class);
 
-        return "redirect:" + prop.getGatewayPath() + "/patientFront/list";
+        return "redirect:" + prop.getGatewayPathRedirect() + "/patientFront/list";
     }
 }

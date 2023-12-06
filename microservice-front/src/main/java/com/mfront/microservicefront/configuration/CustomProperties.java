@@ -30,6 +30,8 @@ public class CustomProperties {
      */
     private String gatewayPath;
 
+    private String gatewayPathRedirect;
+
     /**
      * Récupère le chemin du gateway.
      *
@@ -47,5 +49,23 @@ public class CustomProperties {
     public void setGatewayPath(String gatewayPath) {
         logger.info("Mise à jour du chemin du gateway : {}", gatewayPath);
         this.gatewayPath = gatewayPath;
+    }
+
+    /**
+     * Récupère le chemin du gatewayrReirect.
+     *
+     * @return le chemin du gatewayRedirect.
+     */
+    public String getGatewayPathRedirect() {
+        return gatewayPathRedirect;
+    }
+
+    /**
+     * Définit le chemin du gateway.
+     *
+     * @param gatewayPathRedirect le nouveau chemin du gateway à définir.
+     */
+    public void setGatewayPathRedirect(String gatewayPathRedirect) {
+        this.gatewayPathRedirect = gatewayPathRedirect;
     }
 }
