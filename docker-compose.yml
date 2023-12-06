@@ -16,6 +16,8 @@ services:
     environment:
       SP_USERNAME: ${SP_USERNAME}
       SP_PASSWORD: ${SP_PASSWORD}
+    depends_on:
+      - db
 
   microservice-front:
     build:
@@ -33,6 +35,8 @@ services:
     environment:
       SP_USERNAME: ${SP_USERNAME}
       SP_PASSWORD: ${SP_PASSWORD}
+    depends_on:
+      - mongodb
 
   microservice-back-diabete:
     build:
@@ -40,4 +44,29 @@ services:
       dockerfile: Dockerfile
     ports:
      - "9004:9004"
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${SP_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${SP_PASSWORD}
+      MONGO_INITDB_DATABASE: note
+    volumes:
+      - mongodb_data:/data/db
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${SP_PASSWORD}
+      MYSQL_DATABASE: 'patient'
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+   mongodb_data:
+   db_data:
 

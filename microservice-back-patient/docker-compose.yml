@@ -5,8 +5,8 @@ services:
     ports:
       - "9001:9001"
     environment:
-      SP_USERNAME: root
-      SP_PASSWORD: 0241585915
+      SP_USERNAME: ${SP_USERNAME}
+      SP_PASSWORD: ${SP_PASSWORD}
     depends_on:
       - db
 
@@ -15,7 +15,7 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: 0241585915
+      MYSQL_ROOT_PASSWORD: ${SP_PASSWORD}
       MYSQL_DATABASE: 'patient'
     volumes:
       - db_data:/var/lib/mysql
