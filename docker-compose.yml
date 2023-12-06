@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  microservice-gateway:
+    build:
+      context: ./microservice-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000"
+
+  microservice-back-patient:
+    build:
+      context: ./microservice-back-patient
+      dockerfile: Dockerfile
+    ports:
+      - "9001:9001"
+    environment:
+      SP_USERNAME: ${SP_USERNAME}
+      SP_PASSWORD: ${SP_PASSWORD}
+
+  microservice-front:
+    build:
+      context: ./microservice-front
+      dockerfile: Dockerfile
+    ports:
+      - "9002:9002"
+
+  microservice-back-note:
+    build:
+      context: ./microservice-back-note
+      dockerfile: Dockerfile
+    ports:
+      - "9003:9003"
+    environment:
+      SP_USERNAME: ${SP_USERNAME}
+      SP_PASSWORD: ${SP_PASSWORD}
+
+  microservice-back-diabete:
+    build:
+      context: ./microservice-back-diabete
+      dockerfile: Dockerfile
+    ports:
+     - "9004:9004"
+

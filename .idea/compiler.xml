@@ -7,11 +7,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="microservice-front" />
         <module name="microservice-gateway" />
         <module name="microservice-back-note" />
-        <module name="microservice-back-patient" />
+        <module name="microservice-front" />
         <module name="microservice-back-diabete" />
+        <module name="microservice-back-patient" />
       </profile>
     </annotationProcessing>
   </component>
