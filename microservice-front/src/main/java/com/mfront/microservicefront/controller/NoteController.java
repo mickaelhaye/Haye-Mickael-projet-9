@@ -132,7 +132,7 @@ public class NoteController {
             model.addAttribute("errorMessage", "Impossible de se connecter au service de notes.");
             return "error/errorPage";
         }
-        return "redirect:" + prop.getGatewayPath() + "/noteFront/list/"+idPatient+"/"+nomPatient;
+        return "redirect:" + prop.getGatewayPathRedirect() + "/noteFront/list/"+idPatient+"/"+nomPatient;
     }
 
     /**
@@ -175,7 +175,7 @@ public class NoteController {
             model.addAttribute("errorMessage", "Impossible de se connecter au service de notes.");
             return "error/errorPage";
         }
-        return "redirect:" + prop.getGatewayPath() + "/noteFront/list/"+idPatient+"/"+nomPatient;
+        return "redirect:" + prop.getGatewayPathRedirect() + "/noteFront/list/"+idPatient+"/"+nomPatient;
     }
 
     /**
@@ -198,6 +198,6 @@ public class NoteController {
             model.addAttribute("errorMessage", "Impossible de se connecter au service de notes.");
             return "error/errorPage";
         }
-        return "redirect:" + prop.getGatewayPath() + "/noteFront/list/"+idPatient+"/"+nomPatient;
+        return "redirect:" + prop.getGatewayPathRedirect() + "/noteFront/list/"+idPatient+"/"+nomPatient;
     }
 }
