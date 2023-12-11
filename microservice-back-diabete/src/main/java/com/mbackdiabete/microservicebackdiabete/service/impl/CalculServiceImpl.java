@@ -5,11 +5,13 @@ import com.mbackdiabete.microservicebackdiabete.controller.DiabeteController;
 import com.mbackdiabete.microservicebackdiabete.service.CalculService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -105,10 +107,10 @@ public class CalculServiceImpl implements CalculService {
         List<String> notesInLowerCase = notes.stream().map(String::toLowerCase).collect(Collectors.toList());
         //Chargement Liste des expressions à rechercher
         String filePath = prop.getTermesDiabeteFilePath();
+        ClassPathResource resource = new ClassPathResource(filePath);
+
         List<String> ExpressionsInLowerCase = new ArrayList<>();
-        try {
-            // Création du BufferedReader pour lire le fichier
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
             String line;
 
             // Lecture du fichier ligne par ligne
