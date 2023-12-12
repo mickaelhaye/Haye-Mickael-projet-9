@@ -87,7 +87,7 @@ Il doit aussi pouvoir renseigner des notes sur ses patients. Avec ce données l'
   	-Microservice Back Patient : http://localhost:9001/swagger-ui.html
 
 # Docker
-	Chaques microservice possède un fichier Dockerfile.
+	Chaque microservice possède un fichier Dockerfile.
  	L'ensemble du projer possède un fichier docker-compose.yml.
   	Le fichier docker-compose.yml prend en compte la conteneurisation des bases de données.
    	Pour construire et démarrer les services:
