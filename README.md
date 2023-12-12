@@ -86,7 +86,7 @@ Il doit aussi pouvoir renseigner des notes sur ses patients. Avec ce données l'
  	-Microservice Back Note: http://localhost:9003/swagger-ui.html
   	-Microservice Back Patient : http://localhost:9001/swagger-ui.html
 
-# Docker
+# Docker:
 	Chaque microservice possède un fichier Dockerfile.
  	L'ensemble du projer possède un fichier docker-compose.yml.
   	Le fichier docker-compose.yml prend en compte la conteneurisation des bases de données.
@@ -97,4 +97,27 @@ Il doit aussi pouvoir renseigner des notes sur ses patients. Avec ce données l'
 		-Exécuter 'docker-compose up --build' pour builder et démarrer les services.
   		-Exécuter 'docker-compose down' pour stopper les services.
     	-Exécuter 'docker-compose up' pour redémarrer les services.
-	
+
+# Green Code:
+	-L'écoconception consiste à prendre en considération les problématiques environnementales dès la conception du service.
+ 	-Plus c'est pensé tôt, plus cela sera efficace.
+  	-Il faut des sites plus légers pour prolonger la durée de vie des terminaux. La fabrication et l'utilisation des terminaux sont les éléments les plus couteux.
+   	-3 leviers permettent d'alléger un site web:
+    		-Frugalité fonctionnelle: supprimer les fonctionnalités peu utilisées, performances des algorithmes.
+      		-Optimisation du contenant.
+		-Optimisation du contenu: définition des images, contenu statique.
+  	-Coté front: 
+   		-Concevoir des applications légères et efficaces.
+		-Eliminer les fonctionnalités nons essentielles.
+		-Support des anciens terminaux (mobiles, avec un réseau peu performant)
+		-Limiter le poids de la page, le nombre de requetes serveur, la complexité du DOM.
+		-70 % des fonctionnalités demandées par les utilisateurs ne sont pas essentielles , 45 % ne sont jamais utilisées.
+  	-Coté back:
+		-Données : durée de stockage des données, expiration des données.
+		-Test de performances.
+
+   	-Pour notre application les points qui pourraient être intérressant d'analyser:
+   		-Dans le microservice Back Diabete, l'optimisation de l'algorithme de recherche des termes diabètes (test de performance).
+    	-Dans le microservice Front, il est possible de diminuer le nombre de requètes. Il y a une requête pour récupérer la liste des patients, et une requête pour récupérer un patient précis pour le mettre à jour, alors que l'on a déjà la liste avec tous les patients disponibles. Idem pour les notes.
+     	-Dans le microservice Front, est ce que les touches Supprimer un patient et une note , sont bien utiles.
+      	-Concernant la durée de vie des notes dans la base de données MongoDb, peut être qu'il serait pertinent de rajouter une donnée pour la durée de validité de la note.
