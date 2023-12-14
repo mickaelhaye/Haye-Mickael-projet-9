@@ -99,25 +99,32 @@ Il doit aussi pouvoir renseigner des notes sur ses patients. Avec ce données l'
     	-Exécuter 'docker-compose up' pour redémarrer les services.
 
 # Green Code:
-	-L'écoconception consiste à prendre en considération les problématiques environnementales dès la conception du service.
- 	-Plus c'est pensé tôt, plus cela sera efficace.
-  	-Il faut des sites plus légers pour prolonger la durée de vie des terminaux. La fabrication et l'utilisation des terminaux sont les éléments les plus couteux.
-   	-3 leviers permettent d'alléger un site web:
-    		-Frugalité fonctionnelle: supprimer les fonctionnalités peu utilisées, performances des algorithmes.
-      		-Optimisation du contenant.
+	Concernant le numérique, La fabrication des terminaux est la principale source d’impacts écologiques.
+ 	Pour agir sur cette source, le dévelloppeur  doit avoir une démarche écoconception.
+  	Cett démarche vise notamment à diminuer l’obsolescence des terminaux. 
+   	Il faut la prendre en compte dès la conception.
+    Il faut des sites plus légers pour prolonger la durée de vie des terminaux.
+    Encourager les utilisateurs à garder leur matériel (via des applications légères et efficaces).
+ 
+	-3 leviers permettent d'alléger un site web:
+		-Frugalité fonctionnelle: supprimer les fonctionnalités peu utilisées, performances des algorithmes.
+		-Optimisation du contenant : Optimiser les codes sources serveur et client : inspecter le code pour identifier les éléments de code inutiles
 		-Optimisation du contenu: définition des images, contenu statique.
+
   	-Coté front: 
-   		-Concevoir des applications légères et efficaces.
-		-Eliminer les fonctionnalités nons essentielles.
+		-Concevoir des applications légères et efficaces.
+		-Eliminer les fonctionnalités non essentielles.
 		-Support des anciens terminaux (mobiles, avec un réseau peu performant)
-		-Limiter le poids de la page, le nombre de requetes serveur, la complexité du DOM.
-		-70 % des fonctionnalités demandées par les utilisateurs ne sont pas essentielles , 45 % ne sont jamais utilisées.
-  	-Coté back:
-		-Données : durée de stockage des données, expiration des données.
+		-Limiter le poids de la page, le nombre de requètes serveur.
+		-70 % des fonctionnalités demandées par les utilisateurs ne sont pas essentielles , 45 % ne sont jamais utilisées.
+
+	-Coté back:
+		-Données : durée de stockage des données, expiration des données.
 		-Test de performances.
 
-   	-Pour notre application les points qui pourraient être intérressant d'analyser:
-   		-Dans le microservice Back Diabete, l'optimisation de l'algorithme de recherche des termes diabètes (test de performance).
-    	-Dans le microservice Front, il est possible de diminuer le nombre de requètes. Il y a une requête pour récupérer la liste des patients, et une requête pour récupérer un patient précis pour le mettre à jour, alors que l'on a déjà la liste avec tous les patients disponibles. Idem pour les notes.
-     	-Dans le microservice Front, est ce que les touches Supprimer un patient et une note , sont bien utiles.
-      	-Concernant la durée de vie des notes dans la base de données MongoDb, peut être qu'il serait pertinent de rajouter une donnée pour la durée de validité de la note.
+	-Pour notre application les points qui pourraient être intéressant d'analyser:
+		-Dans le microservice Back Diabète, l'optimisation de l'algorithme de recherche des termes diabètes (test de performance).
+		-Dans le microservice Front, il est possible de diminuer le nombre de requètes. Il y a une requête pour récupérer la liste des patients, et une requête pour récupérer un patient 			précis pour le mettre à jour, alors que l'on a déjà la liste avec tous les patients disponibles. Pour afficher la liste est ce qu’il est utile de récupérer l’intégralité des objets. 			Idem pour les notes.
+ 		-Dans le microservice Front, est ce que les touches Supprimer un patient et une note, sont bien utiles.
+		-Dans le microservice Front, les touches visu fiche et note sont redondantes.
+  		-Concernant la durée de vie des notes dans la base de données MongoDb, peut être qu'il serait pertinent de rajouter une donnée pour la durée de validité de la note.
